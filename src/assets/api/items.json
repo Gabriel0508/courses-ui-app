@@ -1,0 +1,38 @@
+[
+    {
+        "id": "1",
+        "name": "Web Development",
+        "description": "high level",
+        "price": "5.5"
+    },
+    {
+        "id": "2",
+        "name": "Automation Testing",
+        "description": "lorem10",
+        "price": "5"
+    },
+    {
+        "id": "3",
+        "name": "Java",
+        "description": "lorem100",
+        "price": "10"
+    },
+    {
+        "id": "4",
+        "name": "RxJs",
+        "description": "lorem34",
+        "price": "6"
+    },
+    {
+        "id": "5",
+        "name": "JavaScript",
+        "description": "lorem79",
+        "price": "8"
+    },
+    {
+        "id": "6",
+        "name": "Spring",
+        "description": "lorem1000",
+        "price": "9"
+    }
+]

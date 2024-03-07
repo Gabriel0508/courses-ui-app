@@ -1,0 +1,29 @@
+<app-header></app-header>
+
+<div class="container bg-warning mt-3">
+  <p class="d-flex justify-content-center align-items-center">
+    Accesa banner here
+  </p>
+</div>
+
+<div
+  class="container mt-2"
+  *ngIf="{
+    items: items$ | async,
+    isLoading: isLoading$ | async
+  } as data"
+>
+  <div class="row">
+    <div class="col-3" *ngFor="let item of data.items">
+      <div class="card mt-3">
+        <div class="card-body">
+          <h5 class="card-title">{{ item.name }}</h5>
+          <p class="card-text">
+            {{ item.description }}
+          </p>
+          <a href="#" class="btn btn-primary">Take the course</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

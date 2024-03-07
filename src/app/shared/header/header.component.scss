@@ -1,0 +1,28 @@
+.navbar {
+  background: rgba(0, 0, 0, 0) linear-gradient(45deg, #0097b9 0%, #8769ae 100%)
+    0 0 no-repeat padding-box;
+  .collapse {
+    justify-content: end;
+    .navbar-nav {
+      align-items: center;
+      justify-content: space-between;
+      width: 50%;
+      .btn-accesa {
+        background: #0097b9;
+      }
+    }
+  }
+}
+
+
+@media only screen and (max-width: 768px) {
+  .navbar {
+    .collapse {
+      justify-content: unset;
+      .navbar-nav {
+        width: 100%;
+        align-items: unset;
+      }
+    }
+  }
+}
