@@ -1,12 +1,8 @@
 <app-header></app-header>
+<app-banner (navigateToCourses)="onNavigateToAllCourses($event)"></app-banner>
+<app-generic-card></app-generic-card>
 
-<div class="container bg-warning mt-3">
-  <p class="d-flex justify-content-center align-items-center">
-    Accesa banner here
-  </p>
-</div>
-
-<div
+<!-- <div
   class="container mt-2"
   *ngIf="{
     items: items$ | async,
@@ -26,4 +22,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

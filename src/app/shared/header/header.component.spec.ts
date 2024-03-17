@@ -25,11 +25,11 @@ describe('HeaderComponent', () => {
 
   it('should toggle collapsed value when onCollapsedNav is called', () => {
     const initialCollapsedValue = component.collapsed;
-
     // Call the method
     component.onCollapsedNav();
-
     // Expect the value to be toggled
     expect(component.collapsed).toBe(!initialCollapsedValue);
   });
+
+  
 });

@@ -3,7 +3,8 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Item } from 'src/app/core/models/item.model';
 import * as fromItems from '../../state/item/index';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-landing-page',
@@ -17,7 +18,8 @@ export class LandingPageComponent {
   createItem: FormGroup = new FormGroup({});
 
   constructor(
-    private readonly store: Store
+    private readonly store: Store,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -31,6 +33,11 @@ export class LandingPageComponent {
 
   private initDispatch(): void {
     this.store.dispatch(fromItems.getItems());
+  }
+
+  onNavigateToAllCourses(url: string) {
+    const courses = `/items`;
+    this.router.navigateByUrl(courses)
   }
 
   private initSubscriptions(): void {
