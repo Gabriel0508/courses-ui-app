@@ -6,33 +6,35 @@
   <div class="collapse navbar-collapse" [class.collapse]="collapsed">
     <ul class="navbar-nav d-flex">
       <li class="nav-item active">
-        <a class="nav-link text-light" routerLinkActive="active" routerLink="/items"
+        <a
+          class="nav-link text-light"
+          routerLinkActive="active"
+          routerLink="/items"
           >Courses</a
         >
       </li>
-      <form class="d-flex">
+      <form class="search-input" [formGroup]="searchCourseForm">
         <input
           class="form-control me-2 rounded-pill"
           type="search"
-          placeholder="Search"
+          placeholder="Search after a favorite course"
+          formControlName="searchCourse"
           aria-label="Search"
         />
-        <div>
-          <i class="fa fa-magnifying-glass"></i>
+        <div class="searching-icon">
+          <i class="fa fa-search"></i>
         </div>
       </form>
-      <div *ngIf="collapsed" class="text-light">|</div>
-      <li class="d-flex">
-        <a class="nav-link text-light me-1">
-          <i class="fa fa-user"></i>
-        </a>
-        <a class="nav-link text-light" routerLinkActive="active" routerLink="/"
-          >Sign In</a
+      <li class="nav-item d-flex">
+        <a class="nav-link text-light" routerLinkActive="active" routerLink="/">
+          <i class="fa fa-user me-1"></i>
+          Sign In</a
         >
       </li>
       <li class="nav-item active">
         <a class="nav-link text-light" routerLinkActive="active" routerLink="/"
-          ><i class="fa fa-globe"></i></a>
+          ><i class="fa fa-globe"></i
+        ></a>
       </li>
     </ul>
   </div>
