@@ -11,5 +11,4 @@ export class BannerComponent {
   onNavigateToCourses(url: string): void {
     this.navigateToCourses.emit(url);
   }
-
 }

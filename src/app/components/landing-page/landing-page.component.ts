@@ -12,8 +12,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./landing-page.component.scss'],
 })
 export class LandingPageComponent {
-  items$: Observable<Item[]> | undefined;
-  isLoading$: Observable<boolean> | undefined;
+  //items$: Observable<Item[]> | undefined;
+  //isLoading$: Observable<boolean> | undefined;
+
+  allCourses$: Observable<Item[]> | undefined;
 
   createItem: FormGroup = new FormGroup({});
 
@@ -40,8 +42,13 @@ export class LandingPageComponent {
     this.router.navigateByUrl(courses)
   }
 
+  onCourseDetails(id: string) {  //TODO: maybe using ngrx routing
+    const courseId = `/courses/${id}`
+    this.router.navigateByUrl(courseId)
+  }
+
   private initSubscriptions(): void {
-    this.items$ = this.store.pipe(select(fromItems.selectItemList));
-    this.isLoading$ = this.store.pipe(select(fromItems.selectItemIsLoading));
+    this.allCourses$ = this.store.pipe(select(fromItems.selectItemList));
+    //this.isLoading$ = this.store.pipe(select(fromItems.selectItemIsLoading));
   }
 }

@@ -1,25 +1,21 @@
 <app-header></app-header>
 <app-banner (navigateToCourses)="onNavigateToAllCourses($event)"></app-banner>
-<app-generic-card></app-generic-card>
 
-<div
-  class="container mt-2"
-  *ngIf="{
-    items: items$ | async,
-    isLoading: isLoading$ | async
-  } as data"
+<app-generic-card
+  [courses]="allCourses$ | async"
+  (openCourse)="onCourseDetails($event)"
 >
-  <div class="row">
-    <div class="col-3" *ngFor="let item of data.items">
-      <div class="card mt-3">
-        <div class="card-body">
-          <h5 class="card-title">{{ item.name }}</h5>
-          <p class="card-text">
-            {{ item.description }}
-          </p>
-          <a href="#" class="btn btn-primary">Take the course</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+</app-generic-card>
+
+<p>
+  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem porro error,
+  molestiae minus voluptatibus saepe, laudantium sit vitae autem doloribus nulla
+  quod! Repellendus, sint inventore. Culpa, illo. Eos nisi nesciunt veritatis
+  sed harum sint beatae molestias deserunt vel eveniet fuga reiciendis
+  molestiae, in consequuntur praesentium dicta quasi culpa eum hic perferendis
+  velit maiores! Quod blanditiis similique ea veritatis minus autem corporis
+  accusantium dolorum doloremque ipsam eaque, adipisci voluptates, quibusdam
+  fugiat explicabo culpa? Sunt esse qui corrupti iure, quae, est, necessitatibus
+  ea eveniet quidem beatae dolore. Numquam dolorum autem sequi, non illum
+  excepturi veniam ipsa, ipsum dolorem culpa quas aperiam. Eligendi?
+</p>

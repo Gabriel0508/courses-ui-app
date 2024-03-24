@@ -2,5 +2,8 @@ export interface Item {
   id: number;
   name: string;
   description: string;
-  price: number;
+  isEnable: boolean;
+  type: string;
+  owner: string;
+  image: string;
 }

@@ -27,20 +27,19 @@ export class ItemsComponent {
     this.initSubscriptions();
   }
 
-  onCreateItem(): void {
-    if (this.createItem.valid) {
-      this.store.dispatch(
-        fromItems.createItem({
-          item: {
-            id: this.createItem.controls['id'].value,
-            name: this.createItem.controls['name'].value,
-            description: this.createItem.controls['description'].value,
-            price: this.createItem.controls['price'].value,
-          },
-        })
-      );
-    }
-  }
+  // onCreateItem(): void {
+  //   if (this.createItem.valid) {
+  //     this.store.dispatch(
+  //       fromItems.createItem({
+  //         item: {
+  //           id: this.createItem.controls['id'].value,
+  //           name: this.createItem.controls['name'].value,
+  //           description: this.createItem.controls['description'].value,
+  //         },
+  //       })
+  //     );
+  //   }
+  // }
 
   onDeleteItem(item: Item): void {
     this.store.dispatch(fromItems.deleteItem({ item }));
