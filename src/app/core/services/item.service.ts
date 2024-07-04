@@ -7,17 +7,17 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class ItemService {
-  private itemsUrl = '/assets/api/items.json';
+ // private itemsUrl = '/assets/api/items.json'; 
+  private courseUrl = 'http://localhost:8080/courses';
 
   constructor(private readonly http: HttpClient) {}
 
   getItems(): Observable<Item[]> {
-    //return of(this.itemsUrl);
-    return this.http.get<Item[]>(`${this.itemsUrl}`)
+    return this.http.get<Item[]>(`${this.courseUrl}`)
   }
 
   createItem(item: Item): Observable<Item> {
-   //this.itemsUrl = [...this.itemsUrl, item];
+   //this.courseUrl = [...this.courseUrl, item];
     return of(item);
   }
 

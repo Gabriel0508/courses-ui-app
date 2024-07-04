@@ -30,6 +30,4 @@ describe('HeaderComponent', () => {
     // Expect the value to be toggled
     expect(component.collapsed).toBe(!initialCollapsedValue);
   });
-
-  
 });

@@ -4,6 +4,12 @@ export interface Item {
   description: string;
   isEnable: boolean;
   type: string;
-  owner: string;
+  owner: {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    roles: {};
+  };
   image: string;
 }

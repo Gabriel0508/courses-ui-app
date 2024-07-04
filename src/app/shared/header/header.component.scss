@@ -3,6 +3,11 @@
 .navbar {
   background: transparent linear-gradient(45deg, #0097b9 0%, #8769ae 100%) 0 0
   no-repeat padding-box;
+  // .navbar-brand {
+  //   .logo {
+  //     width: 5%;
+  //   }
+  // }
   .navbar-toggler {
     transition: all .10s ease-in-out;
     &:hover:enabled {

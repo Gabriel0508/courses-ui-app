@@ -33,9 +33,6 @@ export class LandingPageComponent {
     this.store.dispatch(fromItems.deleteItem({ item }));
   }
 
-  private initDispatch(): void {
-    this.store.dispatch(fromItems.getItems());
-  }
 
   onNavigateToAllCourses(url: string) {
     const courses = `/items`;
@@ -50,5 +47,9 @@ export class LandingPageComponent {
   private initSubscriptions(): void {
     this.allCourses$ = this.store.pipe(select(fromItems.selectItemList));
     //this.isLoading$ = this.store.pipe(select(fromItems.selectItemIsLoading));
+  }
+
+  private initDispatch(): void {
+    this.store.dispatch(fromItems.getItems());
   }
 }
