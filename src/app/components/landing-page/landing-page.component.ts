@@ -12,16 +12,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./landing-page.component.scss'],
 })
 export class LandingPageComponent {
-  //items$: Observable<Item[]> | undefined;
-  //isLoading$: Observable<boolean> | undefined;
-
   allCourses$: Observable<Item[]> | undefined;
-
   createItem: FormGroup = new FormGroup({});
 
   constructor(
     private readonly store: Store,
-    private router: Router
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {
@@ -33,10 +29,9 @@ export class LandingPageComponent {
     this.store.dispatch(fromItems.deleteItem({ item }));
   }
 
-
   onNavigateToAllCourses(url: string) {
-    const courses = `/items`;
-    this.router.navigateByUrl(courses)
+    //const courses = `/items`;
+    this.router.navigateByUrl('/items')
   }
 
   onCourseDetails(id: string) {  //TODO: maybe using ngrx routing
@@ -44,12 +39,11 @@ export class LandingPageComponent {
     this.router.navigateByUrl(courseId)
   }
 
-  private initSubscriptions(): void {
+  initSubscriptions(): void {
     this.allCourses$ = this.store.pipe(select(fromItems.selectItemList));
-    //this.isLoading$ = this.store.pipe(select(fromItems.selectItemIsLoading));
   }
 
-  private initDispatch(): void {
+  initDispatch(): void {
     this.store.dispatch(fromItems.getItems());
   }
 }

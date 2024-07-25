@@ -4,15 +4,23 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 import { ComponentsModule } from './components/components.module';
 import { ItemsComponent } from './components/items/items.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from './shared/shared.module';
+import { ItemsDetailsComponent } from './components/items-details/items-details.component';
 
 const routes: Routes = [
-  { path: '',  component: LandingPageComponent},
-  { path: 'items',  component: ItemsComponent},
+  { path: '', component: LandingPageComponent },
+  { path: 'items', component: ItemsComponent },
+  { path: 'items/:id', component: ItemsDetailsComponent }
 ];
 
 @NgModule({
-  declarations:[],
-  imports: [RouterModule.forRoot(routes), ComponentsModule, HttpClientModule],
-  exports: [RouterModule]
+  declarations: [],
+  imports: [
+    RouterModule.forRoot(routes),
+    ComponentsModule,
+    SharedModule,
+    HttpClientModule,
+  ],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

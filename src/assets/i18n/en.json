@@ -1,0 +1,44 @@
+{
+  "header": {
+    "ademy": "Audemy",
+    "home": "Home",
+    "courses": "Courses",
+    "create_courses": "Create Courses",
+    "sign_in": "Login/Register"
+  },
+  "landing_page": {
+    "banner": {
+      "title": "Enjoy Online Learning",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, quia voluptas deserunt corrupti est sequi consectetur pariatur illo dolorum ducimus."
+    }
+  },
+  "categories": {
+    "provided_courses": "Courses We Provided",
+    "provided_description": "All Our Available Courses Listed Below",
+    "popular_courses": "Popular Courses",
+    "trainers": "Our Trainer",
+    "trainers_description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, eos."
+  },
+  "authentication": {
+    "title": "MVP",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "email": "Email address",
+    "password": "Password",
+    "forgot_psw": "Forgot Password",
+    "err-message": {
+      "first_name": "First Name is required",
+      "last_name": "Last Name is required",
+      "email": "Email required",
+      "invalid_email": "Enter a valid email address",
+      "password": "This field is required",
+      "invalid_psw": "Password must be a least 8 characters"
+    }
+  },
+  "buttons": {
+    "banner_button": "Get Started",
+    "sign_in_button": "Sign In",
+    "register_button": "Register",
+    "create_acc_button": "Create an account"
+  }
+}

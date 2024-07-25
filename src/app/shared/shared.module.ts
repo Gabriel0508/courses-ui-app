@@ -6,6 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BannerComponent } from './banner/banner.component';
 import { GenericCardComponent } from './generic-card/generic-card.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { GenericCardComponent } from './generic-card/generic-card.component';
     BrowserModule,
     CommonModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule
   ],
   exports: [HeaderComponent, BannerComponent, GenericCardComponent]
 })

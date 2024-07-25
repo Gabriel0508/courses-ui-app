@@ -18,4 +18,12 @@ describe('BannerComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should emit navigateToCourses event with the correct URL', () => {
+    jest.spyOn(component.navigateToCourses, 'emit');
+    const testUrl = 'example-url';
+    component.onNavigateToCourses(testUrl);
+
+    expect(component.navigateToCourses.emit).toHaveBeenCalledWith(testUrl);
+  });
 });

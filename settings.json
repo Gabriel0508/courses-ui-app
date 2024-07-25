@@ -1,0 +1,6 @@
+{
+    "jest.jestCommandLine": "npm ci-test",
+    "jest.runAllTestFirst": false,
+    "jest.autoEnable": false,
+    "jest.showCoverageOnLoad": false
+}

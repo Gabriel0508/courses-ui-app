@@ -18,4 +18,13 @@ describe('GenericCardComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should emit the corect id on opening the course', () => {
+    jest.spyOn(component.openCourse, 'emit');
+    const testId = 'test-id';
+    component.id = testId;
+    component.onOpenCourse();
+
+    expect(component.openCourse.emit).toHaveBeenCalledWith(testId);
+  })
 });
