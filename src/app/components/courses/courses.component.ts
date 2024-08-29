@@ -7,11 +7,11 @@ import { CourseApiActions } from 'src/app/state/item/items.actions';
 import { selectCoursesList } from 'src/app/state/item/item.selectors';
 
 @Component({
-  selector: 'app-items',
-  templateUrl: './items.component.html',
-  styleUrls: ['./items.component.scss'],
+  selector: 'app-courses',
+  templateUrl: './courses.component.html',
+  styleUrls: ['./courses.component.scss'],
 })
-export class ItemsComponent {
+export class CoursesComponent {
   items$: Observable<Item[]> | undefined;
   isLoading$: Observable<boolean> | undefined;
 

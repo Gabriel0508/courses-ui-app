@@ -5,11 +5,11 @@ import { Item } from 'src/app/core/models/item.model';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-items-details',
-  templateUrl: './items-details.component.html',
-  styleUrls: ['./items-details.component.scss'],
+  selector: 'app-courses-details',
+  templateUrl: './courses-details.component.html',
+  styleUrls: ['./courses-details.component.scss'],
 })
-export class ItemsDetailsComponent implements OnInit{
+export class CoursesDetailsComponent implements OnInit{
 
   course: Item | undefined;
   errorMessage: string = ''
