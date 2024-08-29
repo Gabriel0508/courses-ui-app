@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ItemsComponent } from './items.component';
+import { ItemsComponent } from './courses.component';
 import { provideMockStore } from '@ngrx/store/testing';
 import { Store } from '@ngrx/store';
 
