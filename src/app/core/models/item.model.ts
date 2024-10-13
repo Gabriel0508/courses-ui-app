@@ -9,7 +9,11 @@ export interface Item {
     firstName: string;
     lastName: string;
     email: string;
-    roles: {};
+    roles: [
+      {
+        name: string;
+      }
+    ];
   };
-  image: string;
+  image: null;
 }

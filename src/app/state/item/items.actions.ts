@@ -7,17 +7,17 @@ export const CourseApiActions = createActionGroup({
   source: 'CoursesApi',
   events: {
     'get courses': emptyProps(),
-    'get courses success': props<{
+    'courses success': props<{
       courses: Item[];
     }>(),
-    'get courses failure': props<{
+    'courses failure': props<{
       error: any;
     }>(),
     'get course id': props<{
       id: number | undefined;
     }>(),
     'create course': props<{
-      course: Item[] | undefined;
+      course: Item ;
     }>(),
     'delete course': props<{
       course: Item | undefined;

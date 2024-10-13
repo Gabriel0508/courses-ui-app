@@ -4,8 +4,9 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ItemService } from 'src/app/core/services/item.service';
-import { catchError, map, of, switchMap } from 'rxjs';
+import { catchError, map, mergeMap, of, switchMap } from 'rxjs';
 import { CourseApiActions } from './items.actions';
+import { Item } from 'src/app/core/models/item.model';
 
 @Injectable()
 export class CoursesEffects {
@@ -19,10 +20,8 @@ export class CoursesEffects {
       ofType(CourseApiActions.getCourses),
       switchMap(() =>
         this.courseService.getItems().pipe(
-          map((courses) => CourseApiActions.getCoursesSuccess({ courses })),
-          catchError((error) =>
-            of(CourseApiActions.getCoursesFailure({ error }))
-          )
+          map((courses) => CourseApiActions.coursesSuccess({ courses })),
+          catchError((error) => of(CourseApiActions.coursesFailure({ error })))
         )
       )
     )
@@ -39,4 +38,18 @@ export class CoursesEffects {
   //     )
   //   )
   // );
+
+  createCourse$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CourseApiActions.createCourse),
+      mergeMap(({ course }) =>
+        this.courseService.createCourse(course).pipe(
+          map((newCourse: any) =>
+            CourseApiActions.coursesSuccess({ courses: newCourse })
+          ),
+          catchError((error) => of(CourseApiActions.coursesFailure({ error })))
+        )
+      )
+    )
+  );
 }

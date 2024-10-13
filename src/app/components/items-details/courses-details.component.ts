@@ -14,7 +14,6 @@ export class CoursesDetailsComponent implements OnInit{
   course: Item | undefined;
   errorMessage: string = ''
 
-
   constructor(
     private readonly store: Store,
     private readonly itemService: ItemService,
