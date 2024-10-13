@@ -17,8 +17,6 @@ import { courseReducer } from './state/item/item.reducers';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StoreModule.forRoot(),
-    EffectsModule.forRoot(),
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
@@ -27,7 +25,7 @@ import { courseReducer } from './state/item/item.reducers';
         deps: [HttpClient],
       },
     }),
-    StoreModule.forRoot({ courses: courseReducer}),
+    StoreModule.forRoot({ courses: courseReducer }),
     EffectsModule.forRoot([CoursesEffects])
   ],
   providers: [],

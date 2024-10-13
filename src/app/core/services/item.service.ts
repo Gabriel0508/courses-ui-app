@@ -12,6 +12,7 @@ export class ItemService {
   constructor(private readonly http: HttpClient) {}
 
   getItems(): Observable<Item[]> {
+    console.log();
     return this.http.get<Item[]>(`${this.courseUrl}`);
   }
 
@@ -21,9 +22,8 @@ export class ItemService {
     );
   }
 
-  createItem(item: Item): Observable<Item> {
-    //this.courseUrl = [...this.courseUrl, item];
-    return of(item);
+  createCourse(item: Item | undefined): Observable<Item> {
+    return this.http.post<Item>(this.courseUrl, item);
   }
 
   deleteItem(item: Item): Observable<Item> {

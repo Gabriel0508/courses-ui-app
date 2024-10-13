@@ -22,12 +22,12 @@ export const courseReducer = createReducer(
     ...state, 
     loading: true 
   })),
-  on(CourseApiActions.getCoursesSuccess, (state, { courses }) => ({ 
+  on(CourseApiActions.coursesSuccess, (state, { courses }) => ({ 
     ...state, 
     courses, 
     loading: false 
   })),
-  on(CourseApiActions.getCoursesFailure, (state, { error }) => ({ 
+  on(CourseApiActions.coursesFailure, (state, { error }) => ({ 
     ...state, 
     error, 
     loading: false 
@@ -35,5 +35,10 @@ export const courseReducer = createReducer(
   on(CourseApiActions.getCourseId, (state, { id }) => ({
     ...state, 
     selectedCourseId: id
+  })),
+  on(CourseApiActions.createCourse, (state, { course }) => ({
+    ...state,
+    courses: [...state.courses, course],
+    error: null
   }))
 );
