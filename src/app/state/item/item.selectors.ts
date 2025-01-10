@@ -22,5 +22,5 @@ export const selectCourseError = createSelector(
 
 export const selectSelectedCourseId = createSelector(
   selectCourseState,
-  (state: CourseState) => state.selectedCourseId
+  (state: CourseState) => state.selectedCourse
 );

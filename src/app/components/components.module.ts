@@ -5,22 +5,23 @@ import { SharedModule } from '../shared/shared.module';
 import { CoursesComponent } from './courses/courses.component';
 import { CoursesDetailsComponent } from './items-details/courses-details.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CourseFormComponent } from './course-form/course-form.component';
-
+import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 @NgModule({
   declarations: [
     LandingPageComponent,
     CoursesComponent,
-    CoursesDetailsComponent,
-    CourseFormComponent
+    CoursesDetailsComponent
   ],
   imports: [
     CommonModule,
-    SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserModule,
+    SharedModule
   ],
+  providers:[BsModalRef],
   exports: [LandingPageComponent, CoursesComponent, CoursesDetailsComponent]
 })
 export class ComponentsModule { }

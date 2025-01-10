@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ItemsComponent } from './courses.component';
+import { CoursesComponent } from './courses.component';
 import { provideMockStore } from '@ngrx/store/testing';
 import { Store } from '@ngrx/store';
 
-describe('ItemsComponent', () => {
-  let component: ItemsComponent;
-  let fixture: ComponentFixture<ItemsComponent>;
+describe('Courses Component', () => {
+  let component: CoursesComponent;
+  let fixture: ComponentFixture<CoursesComponent>;
   let store: Store;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [provideMockStore({})],
-      declarations: [ItemsComponent]
+      declarations: [CoursesComponent]
     });
-    fixture = TestBed.createComponent(ItemsComponent);
+    fixture = TestBed.createComponent(CoursesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

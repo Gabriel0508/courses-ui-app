@@ -11,6 +11,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CoursesEffects } from './state/item/item.effects';
 import { courseReducer } from './state/item/item.reducers';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +20,7 @@ import { courseReducer } from './state/item/item.reducers';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ToastrModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -28,7 +31,7 @@ import { courseReducer } from './state/item/item.reducers';
     StoreModule.forRoot({ courses: courseReducer }),
     EffectsModule.forRoot([CoursesEffects])
   ],
-  providers: [],
+  providers: [BsModalRef, BsModalService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

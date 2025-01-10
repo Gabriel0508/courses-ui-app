@@ -15,7 +15,11 @@
           >{{ "header.courses" | translate }}</a
         >
       </li>
-      <form class="search-input" [formGroup]="searchCourseForm">
+      <form
+        class="search-input"
+        [formGroup]="searchCourseForm"
+        *ngIf="collapsed"
+      >
         <input
           class="form-control me-2 rounded-pill"
           type="search"
@@ -34,8 +38,7 @@
         >
       </li>
       <li class="nav-item active">
-        <!-- <a class="nav-link text-light" routerLinkActive="active" routerLink="/"
-          ><i class="fa fa-globe"></i
+        <!-- <a class="nav-link text-light" routerLinkActive="active" routerLink="/"><i class="fa fa-globe"></i
         ></a> -->
         <select
           class="form-select form-select-sm"

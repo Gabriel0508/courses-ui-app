@@ -1,14 +1,23 @@
-<app-header></app-header>
-<app-banner (navigateToCourses)="onNavigateToAllCourses($event)"></app-banner>
+<ng-container>
+  <app-header></app-header>
 
-<app-generic-card
-  [courses]="allCourses$ | async"
-  (openCourse)="onCourseDetails($event)"
->
-</app-generic-card>
+  <app-banner (navigateToCourses)="onNavigateToAllCourses($event)"></app-banner>
 
-<div class="container-fluid static my-5">
+  <div class="container my-3">
+    <div class="row g-3">
+      <div
+        class="col-sm-12 col-md-6 col-lg-3"
+        *ngFor="let course of (allCourses$ | async)"
+      >
+        <app-generic-card
+          [courses]="[course]"
+          [id]="course.id"
+          (openCourse)="onCourseDetails($event)"
+        >
+        </app-generic-card>
+      </div>
+    </div>
+  </div>
 
-</div>
-
-<app-footer></app-footer>
+  <app-footer></app-footer>
+</ng-container>

@@ -1,37 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ItemService } from 'src/app/core/services/item.service';
 import { Item } from 'src/app/core/models/item.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { CourseApiActions } from 'src/app/state/item/items.actions';
+import { selectSelectedCourseId } from 'src/app/state/item/item.selectors';
 
 @Component({
   selector: 'app-courses-details',
   templateUrl: './courses-details.component.html',
   styleUrls: ['./courses-details.component.scss'],
 })
-export class CoursesDetailsComponent implements OnInit{
-
+export class CoursesDetailsComponent implements OnInit {
   course: Item | undefined;
-  errorMessage: string = ''
 
-  constructor(
-    private readonly store: Store,
-    private readonly itemService: ItemService,
-    private router: Router,
-    private route: ActivatedRoute,
-  ) {}
+  constructor(private readonly store: Store, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    if (id) {      
-      this.getCourse(id);
-    }
-  }
+    this.route.paramMap.subscribe((params) => {
+      const id = Number(params.get('id'));
 
-  getCourse(id: number) {
-    this.itemService.getItemId(id).subscribe({
-      next: (course) => (this.course = course),
-      error: (err) => (this.errorMessage = err),
+      this.store.dispatch(CourseApiActions.getCourseId({ id }));
+
+      this.store
+        .select(selectSelectedCourseId)
+        .subscribe((course) => (this.course = course)); //TODO: unsubscribe
     });
   }
 }

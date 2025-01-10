@@ -2,18 +2,14 @@ export interface Item {
   id: number;
   name: string;
   description: string;
-  isEnable: boolean;
+  isEnabled: boolean;
   type: string;
   owner: {
     id: number;
     firstName: string;
     lastName: string;
     email: string;
-    roles: [
-      {
-        name: string;
-      }
-    ];
+    roles: { name: string }[];
   };
-  image: null;
+  image: string;
 }

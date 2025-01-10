@@ -1,39 +1,55 @@
 <app-header></app-header>
 
-<app-course-form></app-course-form>
+<div class="container my-3">
+  <p>Click here to create a new Course</p>
+  <button class="btn btn-blue" (click)="openModal(modalTemplate)">Add +</button>
+</div>
 
-<div class="my-4">
-  <div class="mt-2 px-2">
-    <table
-      class="table table-striped"
-      *ngIf="{
-        items: items$ | async,
-        isLoading: isLoading$ | async
-      } as data"
-    >
+<ng-template #modalTemplate>
+  <app-modal (closeModal)="onCloseModal()"></app-modal>
+</ng-template>
+
+<div *ngIf="isLoading$ | async; else content">
+  <app-loading-spinner></app-loading-spinner>
+</div>
+
+<ng-template class="mt-2 px-2" #content>
+  <div class="container my-4">
+    <table class="table table-hover border" *ngIf="items$ | async as data">
       <thead>
         <tr>
-          <th scope="col">Id</th>
           <th scope="col">Name</th>
           <th scope="col">Description</th>
+          <th scope="col">Type</th>
+          <th scope="col">Created By</th>
           <th scope="col">Action</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of data.items">
-          <th scope="row">{{ item.id }}</th>
-          <td>{{ item.name }}</td>
+        <tr *ngIf="data.length === 0">
+          <td colspan="4" class="text-center text-dark-blue">
+            No courses available.
+          </td>
+        </tr>
+        <tr
+          *ngFor="let item of data"
+          class="table-items"
+          (click)="onCourseDetails(item.id)"
+        >
+          <th>{{ item.name }}</th>
           <td>{{ item.description }}</td>
+          <td>{{ item.type }}</td>
+          <td>{{ item.owner.lastName + " " + item.owner.firstName }}</td>
           <td>
             <button
               class="btn btn-primary rounded-pill"
-              (click)="onDeleteItem(item)"
+              (click)="onDeleteItem(item.id)"
             >
-              <i i-bs name="alarm-fill"></i>Delete
+              <i class="fa fa-trash"></i>
             </button>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
-</div>
+</ng-template>

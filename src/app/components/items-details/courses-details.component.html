@@ -1,9 +1,56 @@
 <app-header></app-header>
 
-<div>
-    <p>works</p>
+<!-- <div class="d-flex my-3 mx-3">
+  <span>
+    <i class="fa fa-arrow-left"></i>
+  </span>
+  <p class="ms-2">Back</p>
+</div> -->
+
+<div *ngIf="course; else loading">
+  <div class="container">
+    <div class="text-dark-blue text-center my-3">
+      <h1>Course Details</h1>
+    </div>
+    <div class="border">
+      <div class="row">
+        <div class="col-6 text-center">
+          <h3 class="text-dark-blue">Course:</h3>
+        </div>
+        <div class="col-6 text-center">
+          <h3 class="text-dark-blue">{{ course.name }}</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 text-center">
+          <h3 class="text-dark-blue">Description:</h3>
+        </div>
+        <div class="col-6 text-center">
+          <h3 class="text-dark-blue">{{ course.description }}</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 text-center">
+          <h3 class="text-dark-blue">Type:</h3>
+        </div>
+        <div class="col-6 text-center">
+          <h3 class="text-dark-blue">{{ course.type }}</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 text-center">
+          <h3 class="text-dark-blue">Owner:</h3>
+        </div>
+        <div class="col-6 text-center">
+          <h3 class="text-dark-blue">
+            {{ course.owner.lastName + ' ' + course.owner.firstName }}
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div *ngIf="course">
-  <p>{{ course.description }}</p>
-</div>
+<ng-template #loading>
+  <app-loading-spinner></app-loading-spinner>>
+</ng-template>

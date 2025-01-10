@@ -19,9 +19,9 @@ describe('GenericCardComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should emit the corect id on opening the course', () => {
+  it('should emit the correct id on opening the course', () => {
     jest.spyOn(component.openCourse, 'emit');
-    const testId = 'test-id';
+    const testId = 2;
     component.id = testId;
     component.onOpenCourse();
 

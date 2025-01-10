@@ -32,7 +32,9 @@
             "styles": [
               "node_modules/bootstrap/scss/bootstrap.scss",
               "node_modules/font-awesome/scss/font-awesome.scss",
-              "src/styles.scss"
+              "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
+              "src/styles.scss",
+               "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
@@ -85,5 +87,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

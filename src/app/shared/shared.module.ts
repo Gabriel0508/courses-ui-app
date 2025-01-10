@@ -8,22 +8,35 @@ import { BannerComponent } from './banner/banner.component';
 import { GenericCardComponent } from './generic-card/generic-card.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { FooterComponent } from './footer/footer.component';
-
+import { ModalComponent } from './modal/modal.component';
+import { BsModalRef } from 'ngx-bootstrap/modal';
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     BannerComponent,
     GenericCardComponent,
-    FooterComponent
+    FooterComponent,
+    ModalComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [
     BrowserModule,
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
   ],
-  exports: [HeaderComponent, BannerComponent, GenericCardComponent, FooterComponent]
+  providers: [BsModalRef],
+  exports: [
+    HeaderComponent,
+    BannerComponent,
+    GenericCardComponent,
+    FooterComponent,
+    ModalComponent,
+    LoadingSpinnerComponent,
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}

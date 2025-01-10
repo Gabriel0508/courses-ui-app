@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Item } from 'src/app/core/models/item.model';
-import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { selectCoursesList } from 'src/app/state/item/item.selectors';
+import {
+  selectCoursesList,
+  selectSelectedCourseId,
+} from 'src/app/state/item/item.selectors';
 import { CourseApiActions } from 'src/app/state/item/items.actions';
 
 @Component({
@@ -14,7 +16,6 @@ import { CourseApiActions } from 'src/app/state/item/items.actions';
 })
 export class LandingPageComponent {
   allCourses$: Observable<Item[]> | undefined;
-  createItem: FormGroup = new FormGroup({});
 
   constructor(private readonly store: Store, private readonly router: Router) {}
 
@@ -23,22 +24,17 @@ export class LandingPageComponent {
     this.initSubscriptions();
   }
 
-  onDeleteItem(item: Item): void {
-    this.store.dispatch(CourseApiActions.deleteCourse({ course: item }));
-  }
-
   onNavigateToAllCourses(url: string) {
     this.router.navigateByUrl('/items');
   }
 
-  onCourseDetails(id: string) {
-    //TODO: maybe using ngrx routing
-    const courseId = `/items/${id}`;
-    this.router.navigateByUrl(courseId);
+  onCourseDetails(id: number) {
+    this.router.navigate(['/items', id]);
   }
 
   initSubscriptions(): void {
-    this.allCourses$ = this.store.pipe(select(selectCoursesList));
+    (this.allCourses$ = this.store.pipe(select(selectCoursesList))),
+      tap((data) => console.log('selectCoursesList emitted:', data));
   }
 
   initDispatch(): void {
