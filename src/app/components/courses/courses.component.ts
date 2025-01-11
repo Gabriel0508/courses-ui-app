@@ -1,8 +1,8 @@
 import { Component, TemplateRef } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { delay, Observable, take } from 'rxjs';
-import { Item } from 'src/app/core/models/item.model';
-import { CourseApiActions } from 'src/app/state/item/items.actions';
+import { Course } from 'src/app/core/models/item.model';
+import { CourseApiActions } from 'src/app/state/item/item.actions';
 import {
   selectCourseLoading,
   selectCoursesList,
@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./courses.component.scss'],
 })
 export class CoursesComponent {
-  items$: Observable<Item[]> | undefined;
+  items$: Observable<Course[]> | undefined;
   isLoading$: Observable<boolean> | undefined;
   modalRef?: BsModalRef;
 
@@ -58,7 +58,7 @@ export class CoursesComponent {
   }
 
   onCourseDetails(id: number) {
-    this.router.navigate(['/items', id]);
+    this.router.navigate(['/course', id]);
   }
 
   private initDispatch(): void {

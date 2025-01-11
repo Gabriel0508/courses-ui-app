@@ -1,21 +1,20 @@
-import { ItemService } from './item.service';
+import { CourseService } from './course.service';
 import { TestBed } from '@angular/core/testing';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import { Item } from '../models/item.model';
 
 describe('Course Service', () => {
-  let itemService: ItemService;
+  let courseService: CourseService;
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [ItemService],
+      providers: [CourseService],
     });
-    itemService = TestBed.inject(ItemService);
+    courseService = TestBed.inject(CourseService);
     httpMock = TestBed.inject(HttpTestingController);
   });
 
@@ -24,7 +23,6 @@ describe('Course Service', () => {
   });
 
   it('should create', () => {
-    expect(itemService).toBeTruthy();
+    expect(courseService).toBeTruthy();
   });
-
 });

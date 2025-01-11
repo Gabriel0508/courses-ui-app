@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ValidationsService } from 'src/app/core/services/validations.service';
 import { ToastrService } from 'ngx-toastr';
-import { CourseApiActions } from 'src/app/state/item/items.actions';
+import { CourseApiActions } from 'src/app/state/item/item.actions';
 
 @Component({
   selector: 'app-modal',
@@ -71,7 +71,7 @@ export class ModalComponent {
         id: [1, Validators.required], //TODO: use generic id
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]]
+        email: ['', [Validators.required, Validators.email]],
       }),
       image: [''],
     });

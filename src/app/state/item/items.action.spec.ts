@@ -1,5 +1,5 @@
 import { ApiError } from 'src/app/core/models/error.model';
-import { CourseApiActions } from './items.actions';
+import { CourseApiActions } from './item.actions';
 
 const mockApiError: ApiError = {
   message: 'Failed to fetch data',

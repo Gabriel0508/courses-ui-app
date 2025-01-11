@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Item } from 'src/app/core/models/item.model';
+import { Course } from 'src/app/core/models/item.model';
 import { ActivatedRoute } from '@angular/router';
-import { CourseApiActions } from 'src/app/state/item/items.actions';
+import { CourseApiActions } from 'src/app/state/item/item.actions';
 import { selectSelectedCourseId } from 'src/app/state/item/item.selectors';
 
 @Component({
@@ -11,7 +11,7 @@ import { selectSelectedCourseId } from 'src/app/state/item/item.selectors';
   styleUrls: ['./courses-details.component.scss'],
 })
 export class CoursesDetailsComponent implements OnInit {
-  course: Item | undefined;
+  course: Course | undefined;
 
   constructor(private readonly store: Store, private route: ActivatedRoute) {}
 

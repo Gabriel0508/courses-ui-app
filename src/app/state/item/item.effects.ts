@@ -1,24 +1,24 @@
 //Here we will manage all side effects from action dispatching.
-//In our case we will be calling the books service to manipulate the data.
+//In our case we will be calling the course service to manipulate the data.
 
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { ItemService } from 'src/app/core/services/item.service';
-import { catchError, map, mergeMap, of, switchMap } from 'rxjs';
-import { CourseApiActions } from './items.actions';
+import { CourseService } from 'src/app/core/services/course.service';
+import { catchError, exhaustMap, map, of, switchMap } from 'rxjs';
+import { CourseApiActions } from './item.actions';
 
 @Injectable()
 export class CoursesEffects {
   constructor(
     private readonly actions$: Actions,
-    private readonly courseService: ItemService
+    private readonly courseService: CourseService
   ) {}
 
   getCourses$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CourseApiActions.getCourses),
       switchMap(() =>
-        this.courseService.getItems().pipe(
+        this.courseService.getCourses().pipe(
           map((courses) => CourseApiActions.getCoursesSuccess({ courses })),
           catchError((error) =>
             of(CourseApiActions.getCoursesFailure({ error }))
@@ -31,7 +31,7 @@ export class CoursesEffects {
   getCourseId$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CourseApiActions.getCourseId),
-      mergeMap((action) =>
+      exhaustMap((action) =>
         this.courseService.getCourseById(action.id).pipe(
           map(
             (course) => CourseApiActions.getCourseIdSuccess({ course }),
@@ -47,7 +47,7 @@ export class CoursesEffects {
   createCourse$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CourseApiActions.createCourse),
-      mergeMap(({ course }) =>
+      exhaustMap(({ course }) =>
         this.courseService.createCourse(course).pipe(
           map((newCourse) =>
             CourseApiActions.createCourseSuccess({ course: newCourse })
@@ -63,7 +63,7 @@ export class CoursesEffects {
   deleteCourse$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CourseApiActions.deleteCourse),
-      mergeMap(({ id }) =>
+      exhaustMap(({ id }) =>
         this.courseService.deleteCourse(id).pipe(
           map(() => CourseApiActions.deleteCourseSuccess({ id })),
           catchError((error) =>
