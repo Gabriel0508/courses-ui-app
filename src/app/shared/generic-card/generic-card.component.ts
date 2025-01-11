@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Item } from 'src/app/core/models/item.model';
+import { Course } from 'src/app/core/models/item.model';
 
 @Component({
   selector: 'app-generic-card',
@@ -7,7 +7,7 @@ import { Item } from 'src/app/core/models/item.model';
   styleUrls: ['./generic-card.component.scss'],
 })
 export class GenericCardComponent {
-  @Input() courses!: Item[];
+  @Input() courses!: Course[];
   @Input() id: number | undefined;
   @Output() openCourse = new EventEmitter<number>();
 

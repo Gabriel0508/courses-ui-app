@@ -1,10 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
-import { CourseApiActions } from './items.actions';
-import { Item } from 'src/app/core/models/item.model';
+import { CourseApiActions } from './item.actions';
+import { Course } from 'src/app/core/models/item.model';
 
 export interface CourseState {
-  courses: Item[];
-  selectedCourse: Item | undefined;
+  courses: Course[];
+  selectedCourse: Course | undefined;
   error: any;
   loading: boolean;
 }
@@ -54,7 +54,7 @@ export const courseReducer = createReducer(
   on(CourseApiActions.deleteCourseSuccess, (state, { id }) => ({
     ...state,
     courses: state.courses.filter((course) => course.id !== id),
-    loading: false
+    loading: false,
   })),
   on(CourseApiActions.deleteCourseFailure, (state, { error }) => ({
     ...state,
@@ -65,7 +65,7 @@ export const courseReducer = createReducer(
   //   ...state,
   //   selectedCourseId: id,
   // })),
-   on(CourseApiActions.getCourseIdSuccess, (state, { course }) => ({
+  on(CourseApiActions.getCourseIdSuccess, (state, { course }) => ({
     ...state,
     selectedCourse: course,
     error: null,

@@ -5,12 +5,12 @@ import { ComponentsModule } from './components/components.module';
 import { CoursesComponent } from './components/courses/courses.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
-import { CoursesDetailsComponent } from './components/items-details/courses-details.component';
+import { CoursesDetailsComponent } from './components/course-details/courses-details.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
-  { path: 'items', component: CoursesComponent },
-  { path: 'items/:id', component: CoursesDetailsComponent }
+  { path: 'courses', component: CoursesComponent },
+  { path: 'course/:id', component: CoursesDetailsComponent },
 ];
 
 @NgModule({

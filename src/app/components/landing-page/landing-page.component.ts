@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable, tap } from 'rxjs';
-import { Item } from 'src/app/core/models/item.model';
+import { Course } from 'src/app/core/models/item.model';
 import { Router } from '@angular/router';
 import {
   selectCoursesList,
   selectSelectedCourseId,
 } from 'src/app/state/item/item.selectors';
-import { CourseApiActions } from 'src/app/state/item/items.actions';
+import { CourseApiActions } from 'src/app/state/item/item.actions';
 
 @Component({
   selector: 'app-landing-page',
@@ -15,7 +15,7 @@ import { CourseApiActions } from 'src/app/state/item/items.actions';
   styleUrls: ['./landing-page.component.scss'],
 })
 export class LandingPageComponent {
-  allCourses$: Observable<Item[]> | undefined;
+  allCourses$: Observable<Course[]> | undefined;
 
   constructor(private readonly store: Store, private readonly router: Router) {}
 
@@ -25,11 +25,11 @@ export class LandingPageComponent {
   }
 
   onNavigateToAllCourses(url: string) {
-    this.router.navigateByUrl('/items');
+    this.router.navigateByUrl('/courses');
   }
 
   onCourseDetails(id: number) {
-    this.router.navigate(['/items', id]);
+    this.router.navigate(['/course', id]);
   }
 
   initSubscriptions(): void {
