@@ -1,7 +1,7 @@
 import { Component, TemplateRef } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { delay, Observable, take } from 'rxjs';
-import { Course } from 'src/app/core/models/item.model';
+import { Course } from 'src/app/core/models/course.model';
 import { CourseApiActions } from 'src/app/state/item/item.actions';
 import {
   selectCourseLoading,
@@ -42,6 +42,10 @@ export class CoursesComponent {
       .subscribe((items) => {
         console.log('Items after delete:', items);
       });
+  }
+
+  onEditCourse() {
+    console.log('works');
   }
 
   openModal(viewUserTemplate: TemplateRef<any>) {

@@ -8,9 +8,11 @@ import { SharedModule } from './shared/shared.module';
 import { CoursesDetailsComponent } from './components/course-details/courses-details.component';
 
 const routes: Routes = [
-  { path: '', component: LandingPageComponent },
+  { path: 'home', component: LandingPageComponent},
   { path: 'courses', component: CoursesComponent },
   { path: 'course/:id', component: CoursesDetailsComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '**', redirectTo: '/home' },
 ];
 
 @NgModule({

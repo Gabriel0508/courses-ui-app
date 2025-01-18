@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable, tap } from 'rxjs';
-import { Course } from 'src/app/core/models/item.model';
+import { Course } from 'src/app/core/models/course.model';
 import { Router } from '@angular/router';
 import {
   selectCoursesList,
@@ -24,7 +24,7 @@ export class LandingPageComponent {
     this.initSubscriptions();
   }
 
-  onNavigateToAllCourses(url: string) {
+  onNavigateToAllCourses() {
     this.router.navigateByUrl('/courses');
   }
 
