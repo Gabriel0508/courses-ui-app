@@ -3,9 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LandingPageComponent } from './landing-page.component';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Router } from '@angular/router';
-import { Item } from 'src/app/core/models/course.model';
-import { SharedModule } from 'src/app/shared/shared.module';
-import { GenericCardComponent } from 'src/app/shared/generic-card/generic-card.component';
+
 
 describe('LandingPageComponent', () => {
   let component: LandingPageComponent;
@@ -50,10 +48,9 @@ describe('LandingPageComponent', () => {
   });
 
   it('should navigate to courses', () => {
-    const url = 'somewhere';
     const expectedUrl = '/items';
     jest.spyOn(router, 'navigateByUrl');
-    component.onNavigateToAllCourses(url);
+    component.onNavigateToAllCourses();
 
     expect(router.navigateByUrl).toHaveBeenCalledWith(expectedUrl);
   });

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LandingPageComponent } from './landing-page/landing-page.component';
-import { SharedModule } from '../shared/shared.module';
 import { CoursesComponent } from './courses/courses.component';
 import { CoursesDetailsComponent } from './course-details/courses-details.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { BrowserModule } from '@angular/platform-browser';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [

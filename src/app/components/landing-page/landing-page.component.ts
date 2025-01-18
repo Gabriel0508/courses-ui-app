@@ -2,12 +2,11 @@ import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable, tap } from 'rxjs';
 import { Course } from 'src/app/core/models/course.model';
-import { Router } from '@angular/router';
 import {
   selectCoursesList,
-  selectSelectedCourseId,
 } from 'src/app/state/item/item.selectors';
 import { CourseApiActions } from 'src/app/state/item/item.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-landing-page',
@@ -17,7 +16,7 @@ import { CourseApiActions } from 'src/app/state/item/item.actions';
 export class LandingPageComponent {
   allCourses$: Observable<Course[]> | undefined;
 
-  constructor(private readonly store: Store, private readonly router: Router) {}
+  constructor(private readonly store: Store, private router: Router) {}
 
   ngOnInit(): void {
     this.initDispatch();
