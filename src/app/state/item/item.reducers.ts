@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { CourseApiActions } from './item.actions';
-import { Course } from 'src/app/core/models/item.model';
+import { Course } from 'src/app/core/models/course.model';
 
 export interface CourseState {
   courses: Course[];

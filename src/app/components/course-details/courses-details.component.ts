@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Course } from 'src/app/core/models/item.model';
+import { Course } from 'src/app/core/models/course.model';
 import { ActivatedRoute } from '@angular/router';
 import { CourseApiActions } from 'src/app/state/item/item.actions';
 import { selectSelectedCourseId } from 'src/app/state/item/item.selectors';

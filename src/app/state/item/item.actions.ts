@@ -2,7 +2,7 @@
 
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { ApiError } from 'src/app/core/models/error.model';
-import { Course } from 'src/app/core/models/item.model';
+import { Course } from 'src/app/core/models/course.model';
 
 export const CourseApiActions = createActionGroup({
   source: 'CoursesApi',
