@@ -7,22 +7,25 @@ import {
   selectCourseLoading,
   selectCoursesList,
 } from 'src/app/state/item/item.selectors';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Router } from '@angular/router';
+import { HeaderComponent } from 'src/app/shared/header/header.component';
+import { LoadingSpinnerComponent } from 'src/app/shared/loading-spinner/loading-spinner.component';
+import { ModalComponent } from 'src/app/shared/modal/modal.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-courses',
   templateUrl: './courses.component.html',
   styleUrls: ['./courses.component.scss'],
+  standalone: true,
+  imports: [CommonModule, HeaderComponent, LoadingSpinnerComponent, ModalComponent]
 })
 export class CoursesComponent {
   items$: Observable<Course[]> | undefined;
   isLoading$: Observable<boolean> | undefined;
-  modalRef?: BsModalRef;
 
   constructor(
     private readonly store: Store,
-    private modalService: BsModalService,
     private readonly router: Router
   ) {}
 
@@ -49,16 +52,17 @@ export class CoursesComponent {
   }
 
   openModal(viewUserTemplate: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(viewUserTemplate, {
-      backdrop: 'static',
-      ignoreBackdropClick: true,
-      keyboard: false,
-      animated: true,
-    });
+    // this.modalRef = this.modalService.show(viewUserTemplate, {
+    //   backdrop: 'static',
+    //   ignoreBackdropClick: true,
+    //   keyboard: false,
+    //   animated: true,
+    // });
+    //TODO: use angular material
   }
 
   onCloseModal() {
-    this.modalRef?.hide();
+   // this.modalRef?.hide();
   }
 
   onCourseDetails(id: number) {

@@ -1,27 +1,26 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ValidationsService } from 'src/app/core/services/validations.service';
-import { ToastrService } from 'ngx-toastr';
 import { CourseApiActions } from 'src/app/state/item/item.actions';
 
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss'],
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule]
 })
 export class ModalComponent {
   @Output() closeModal: EventEmitter<any> = new EventEmitter();
 
-  modalRef?: BsModalRef;
   createItemForm: FormGroup = new FormGroup({});
 
   constructor(
     private readonly validationsService: ValidationsService,
     private readonly fb: FormBuilder,
-    private readonly store: Store,
-    private toastr: ToastrService
+    private readonly store: Store
   ) {}
 
   ngOnInit(): void {
@@ -76,14 +75,4 @@ export class ModalComponent {
       image: [''],
     });
   }
-
-  // private showSuccess(): void {
-  //   this.toastr.success(
-  //     'Congrats!',
-  //     `The course ${this.createItemForm.controls['name'].value}`,
-  //     {
-  //       timeOut: 5000,
-  //     }
-  //   );
-  // }
 }

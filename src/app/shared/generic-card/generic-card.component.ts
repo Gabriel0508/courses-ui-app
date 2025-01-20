@@ -6,6 +6,7 @@ import { Course } from 'src/app/core/models/course.model';
   selector: 'app-generic-card',
   templateUrl: './generic-card.component.html',
   styleUrls: ['./generic-card.component.scss'],
+  standalone: true
 })
 export class GenericCardComponent {
   @Input() courses!: Course[];
