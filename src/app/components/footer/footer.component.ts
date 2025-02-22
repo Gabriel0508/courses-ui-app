@@ -3,11 +3,10 @@ import { Component } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-footer',
-  templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.scss'],
-  standalone: true,
-  imports:[CommonModule, TranslateModule]
+    selector: 'app-footer',
+    templateUrl: './footer.component.html',
+    styleUrls: ['./footer.component.scss'],
+    imports: [CommonModule, TranslateModule]
 })
 export class FooterComponent {
   constructor(public translate: TranslateService) {

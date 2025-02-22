@@ -1,0 +1,20 @@
+<mat-card class="example-card" appearance="outlined" >
+  <div *ngFor="let course of courses || []">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>{{ course.name }}</mat-card-title>
+      <mat-card-subtitle>{{ course.name }}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="" alt="Photo of a Shiba Inu">
+    <mat-card-content>
+      <p>
+        {{ course.description }}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button>LIKE</button>
+      <button mat-button>SHARE</button>
+    </mat-card-actions>
+  </div>
+
+</mat-card>

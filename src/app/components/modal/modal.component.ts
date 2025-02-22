@@ -1,20 +1,28 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ValidationsService } from 'src/app/core/services/validations.service';
 import { CourseApiActions } from 'src/app/state/item/item.actions';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss'],
-  standalone: true,
-  imports: [ReactiveFormsModule, CommonModule]
+  imports: [ReactiveFormsModule, CommonModule, MatDialogModule, MatButtonModule, MatFormFieldModule, MatInputModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalComponent {
-  @Output() closeModal: EventEmitter<any> = new EventEmitter();
-
+  readonly dialog = inject(MatDialog);
   createItemForm: FormGroup = new FormGroup({});
 
   constructor(
@@ -41,6 +49,7 @@ export class ModalComponent {
   }
 
   addNewCourse(): void {
+    console.log('works');
     if (this.createItemForm.valid) {
       const courseData = this.createItemForm.value;
       console.log('form value', courseData);
@@ -50,12 +59,13 @@ export class ModalComponent {
         })
       );
     }
+    console.log('course created');
     this.iniFormItem();
     this.onCloseModal();
   }
 
-  onCloseModal(): void {
-    this.closeModal.emit();
+  private onCloseModal(): void {
+    this.dialog.closeAll();
   }
 
   private iniFormItem() {

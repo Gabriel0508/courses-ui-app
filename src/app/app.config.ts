@@ -18,10 +18,13 @@ import { CoursesEffects } from './state/item/item.effects';
 import { courseReducer } from './state/item/item.reducers';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { BrowserModule } from '@angular/platform-browser';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     BrowserModule,
+    BrowserAnimationsModule,
     TranslateService,
     TranslateModule.forRoot({
       loader: {
@@ -35,7 +38,7 @@ export const appConfig: ApplicationConfig = {
     provideEffects([CoursesEffects]),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(withFetch()),
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withInterceptorsFromDi()), provideAnimationsAsync()
   ],
 };
 
