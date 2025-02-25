@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Course } from 'src/app/core/models/course.model';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -17,7 +16,7 @@ export class GenericCardComponent {
   @Input() id: number | undefined;
   @Output() openCourse = new EventEmitter<number>();
 
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor() {}
 
   onOpenCourse(): void {
     this.openCourse.emit(this.id);

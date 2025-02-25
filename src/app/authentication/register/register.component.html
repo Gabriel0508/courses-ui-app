@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="bg-container"></div>
+  <div class="register-container">
+    <div class="account-container">
+      <p>Already have an account?</p>
+
+      <a routerLink="/login">
+        <span class="label">Sign in</span>
+        <mat-icon>arrow_forward</mat-icon>
+      </a>
+    </div>
+    <form [formGroup]="registerForm" class="form-container">
+      <h2>Sign in to Audemy</h2>
+
+      <div class="mat-container">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            formControlName="email"
+            placeholder="Your email address"
+            required
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="password"
+            placeholder="Password"
+            required
+          />
+        </mat-form-field>
+
+        @if (errorMessage) {
+        <div class="error">{{ errorMessage }}</div>
+        }
+      </div>
+        <button
+          mat-raised-button
+          type="button"
+          [disabled]="!registerForm.valid"
+          (click)="onSubmit()"
+          class="register-btn"
+        >
+          <span>Register</span>
+          <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
+    </form>
+  </div>
+</div>
