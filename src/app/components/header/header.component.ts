@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -11,6 +11,11 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { select, Store } from '@ngrx/store';
+import { AuthActions } from 'src/app/state/authentication/auth.actions';
+import { selectCurrentUser } from 'src/app/state/authentication/auth.selector';
+import { Observable, Subscription } from 'rxjs';
+import { User } from 'src/app/core/models/user.model';
 
 @Component({
   selector: 'app-header',
@@ -30,10 +35,11 @@ import { AuthService } from 'src/app/core/services/auth.service';
   ],
   standalone: true,
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   collapsed: boolean = true;
   searchCourseForm: FormGroup = new FormGroup({});
-  user$ = this.authService.currentUser$;
+  user$: Observable<User | null>;
+  userSubscription: Subscription | undefined;
 
   isMobile = true;
   isCollapsed = true;
@@ -42,20 +48,12 @@ export class HeaderComponent implements OnInit {
     public translate: TranslateService,
     private observer: BreakpointObserver,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private readonly store: Store,
   ) {
+    this.user$ = this.store.pipe(select(selectCurrentUser))
     translate.addLangs(['en', 'de']);
     translate.setDefaultLang('en');
-  }
-
-  ngOnInit() {
-    this.observer.observe(['(max-width: 800px)']).subscribe((screenSize) => {
-      if (screenSize.matches) {
-        this.isMobile = true;
-      } else {
-        this.isMobile = false;
-      }
-    });
   }
 
   onCollapsedNav() {
@@ -66,8 +64,7 @@ export class HeaderComponent implements OnInit {
     this.translate.use(lang);
   }
 
-  async logout() {
-    await this.authService.logout();
-    this.router.navigate(['/login']);
+  onLogout() {
+    this.store.dispatch(AuthActions.logout());
   }
 }

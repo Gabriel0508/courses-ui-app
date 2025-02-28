@@ -11,7 +11,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterModule } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { AuthActions } from 'src/app/state/authentication/auth.actions';
 
 @Component({
   selector: 'app-register',
@@ -22,7 +24,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
     RouterModule,
     MatInputModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
@@ -33,6 +35,7 @@ export class RegisterComponent {
 
   constructor(
     private fb: FormBuilder,
+    private readonly store: Store,
     private authService: AuthService,
     private router: Router
   ) {
@@ -42,15 +45,25 @@ export class RegisterComponent {
     });
   }
 
-  async onSubmit() {
+  onSubmit() {
     if (this.registerForm.valid) {
-      try {
-        const { email, password } = this.registerForm.value;
-        await this.authService.register(email, password);
-        this.router.navigate(['/dashboard']);
-      } catch (error: any) {
-        this.errorMessage = error.message;
-      }
+      const { email, password } = this.registerForm.value;
+      this.store.dispatch(AuthActions.register({ email, password }));
+      console.log('dispatch done');
+      this.router.navigate(['/home']);
+      console.log('router done');
     }
   }
+
+  // async onSubmit() {
+  //   if (this.registerForm.valid) {
+  //     try {
+  //       const { email, password } = this.registerForm.value;
+  //       await this.authService.register(email, password);
+  //       this.router.navigate(['/dashboard']);
+  //     } catch (error: any) {
+  //       this.errorMessage = error.message;
+  //     }
+  //   }
+  // }
 }

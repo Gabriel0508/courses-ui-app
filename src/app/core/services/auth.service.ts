@@ -6,62 +6,35 @@ import {
   signOut,
   GoogleAuthProvider,
   signInWithPopup,
-  User,
   authState,
 } from '@angular/fire/auth';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
+import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  currentUser$: Observable<User | null>;
+  constructor(private auth: Auth) {}
 
-  constructor(private auth: Auth) {
-    this.currentUser$ = authState(this.auth);
+  login(email: string, password: string): Observable<any> {
+    return from(signInWithEmailAndPassword(this.auth, email, password));
   }
 
-  async login(email: string, password: string) {
-    try {
-      const result = await signInWithEmailAndPassword(
-        this.auth,
-        email,
-        password
-      );
-      return result;
-    } catch (error) {
-      throw error;
-    }
+  register(email: string, password: string): Observable<any> {
+    return from(createUserWithEmailAndPassword(this.auth, email, password));
   }
 
-  async register(email: string, password: string, ) {
-    try {
-      const result = await createUserWithEmailAndPassword(
-        this.auth,
-        email,
-        password
-      );
-      return result;
-    } catch (error) {
-      throw error;
-    }
+  loginWithGoogle(): Observable<any> {
+    const provider = new GoogleAuthProvider();
+    return from(signInWithPopup(this.auth, provider));
   }
 
-  async loginWithGoogle() {
-    try {
-      const provider = new GoogleAuthProvider();
-      const result = await signInWithPopup(this.auth, provider);
-      return result;
-    } catch (error) {
-      throw error;
-    }
+  logout(): Observable<void> {
+    return from(signOut(this.auth));
   }
 
-  async logout() {
-    try {
-      await signOut(this.auth);
-    } catch (error) {
-      throw error;
-    }
+  getAuthState(): Observable<User | null> {
+    return authState(this.auth);
   }
 }

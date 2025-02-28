@@ -4,7 +4,7 @@ import {
   withFetch,
   withInterceptorsFromDi,
 } from '@angular/common/http';
-import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, isDevMode, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app-routing';
 import {
@@ -20,6 +20,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { provideAuth, getAuth } from '@angular/fire/auth';
+import { authReducer } from './state/authentication/auth.reducer';
+import { AuthEffects } from './state/authentication/auth.effects';
 
 const firebaseConfig = {
   apiKey: "AIzaSyA5WMooUkLJUXoV8qkg_8oVjYsr3WjLnuk",
@@ -34,9 +36,14 @@ const firebaseConfig = {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    provideStore({ courses: courseReducer }),
-    provideEffects([CoursesEffects]),
+    provideStore({ courses: courseReducer, auth: authReducer }),
+    provideEffects([CoursesEffects, AuthEffects]),
     provideZoneChangeDetection({ eventCoalescing: true }),
+    // provideStoreDevtools({
+    //   maxAge: 25,
+    //   logOnly: !isDevMode(),
+    //   autoPause: true,
+    // }),
     provideHttpClient(withFetch()),
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimationsAsync(),
@@ -58,3 +65,7 @@ export const appConfig: ApplicationConfig = {
 export function httpTranslateLoader(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
 }
+function provideStoreDevtools(arg0: { maxAge: number; logOnly: boolean; autoPause: boolean; }): import("@angular/core").EnvironmentProviders | import("@angular/core").Provider {
+  throw new Error('Function not implemented.');
+}
+

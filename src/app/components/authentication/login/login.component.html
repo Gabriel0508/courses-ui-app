@@ -21,19 +21,32 @@
           type="password"
           formControlName="password"
           placeholder="Password"
+          [type]="hidePassword ? 'password' : 'text'"
           required
         />
+        <button
+          mat-icon-button
+          matSuffix
+          [disabled]="!loginForm.get('password')?.value"
+          (click)="togglePasswordVisibility($event)"
+          [attr.aria-label]="'Toggle password visibility'"
+          type="button"
+        >
+          <mat-icon>{{
+            hidePassword ? "visibility_off" : "visibility"
+          }}</mat-icon>
+        </button>
       </mat-form-field>
 
-      @if (errorMessage) {
-      <div class="error">{{ errorMessage }}</div>
+      @if (error$ | async; as error) {
+      <div class="error">{{ error }}</div>
       }
     </div>
     <div class="btn-container">
       <button
         mat-raised-button
         type="button"
-        [disabled]="!loginForm.valid"
+        [disabled]="(loading$ | async) || !loginForm.valid"
         (click)="onSubmit()"
       >
         Login

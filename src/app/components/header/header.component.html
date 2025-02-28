@@ -8,23 +8,23 @@
   </div>
 
   <div class="nav-buttons">
-    @if(!(user$ | async)) {
-    <div class="auth">
-      <button mat-button routerLink="/login">Sign in</button>
-      <button mat-button routerLink="/register">Sign up</button>
-    </div>
-    } @else {
-    <button routerLink="/" mat-button>Home</button>
+    @if(user$ | async) {
+    <button routerLink="/home" mat-button>Home</button>
     <button routerLink="/courses" mat-button>Courses</button>
     <button mat-icon-button (click)="drawerProfile.toggle()">
       <mat-icon> account_circle </mat-icon>
     </button>
+    } @else {
+    <div class="auth">
+      <button mat-button routerLink="/login">Sign in</button>
+      <button mat-button routerLink="/register">Sign up</button>
+    </div>
     }
   </div>
 </mat-toolbar>
 
 <mat-drawer-container autosize>
-  <mat-drawer #drawerMenu position="start" mode="side">
+  <mat-drawer #drawerMenu position="start" mode="over">
     <mat-divider></mat-divider>
 
     @if(user$ | async) {
@@ -37,7 +37,7 @@
       <span>Courses</span>
     </button>
     <mat-divider></mat-divider>
-    <button mat-button class="menu-button" (click)="logout()">
+    <button mat-button class="menu-button" (click)="onLogout()">
       <mat-icon>logout</mat-icon>
       <span>Logout</span>
     </button>
@@ -66,23 +66,12 @@
       class="avatar mat-elevation-z8"
       src="../../../assets/images/logo-with-audemy-with-blue-color-upscaled.jpg"
     />
-    <h4 class="name">{{ user.email }}</h4>
-    <p class="designation">Software Engineer</p>
+    <h4 class="name">{{ user.displayName }}</h4>
+    <p class="designation">{{ user.email }}</p>
     }
     <mat-divider></mat-divider>
 
-    <button mat-icon-button class="menu-button" routerLink="/home">
-      <mat-icon>home</mat-icon>
-      <span>Home</span>
-    </button>
-    <button mat-button class="menu-button" routerLink="/courses">
-      <mat-icon>school</mat-icon>
-      <span>Courses</span>
-    </button>
-    <button mat-button class="menu-button" routerLink="/courses">
-      <mat-icon>person</mat-icon>
-      <span>Profile</span>
-    </button>
+    <p>'some content'</p>
 
     <mat-divider></mat-divider>
 
@@ -91,7 +80,7 @@
       <span>Help</span>
     </button>
 
-    <button mat-button class="menu-button" (click)="logout()">
+    <button mat-button class="menu-button" (click)="onLogout()">
       <mat-icon>logout</mat-icon>
       <span>Logout</span>
     </button>
