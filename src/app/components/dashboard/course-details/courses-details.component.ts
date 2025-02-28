@@ -4,7 +4,7 @@ import { Course } from 'src/app/core/models/course.model';
 import { ActivatedRoute } from '@angular/router';
 import { CourseApiActions } from 'src/app/state/item/item.actions';
 import { selectSelectedCourseId } from 'src/app/state/item/item.selectors';
-import { HeaderComponent } from 'src/app/components/header/header.component';
+import { HeaderComponent } from 'src/app/components/dashboard/header/header.component';
 import { LoadingSpinnerComponent } from 'src/app/components/loading-spinner/loading-spinner.component';
 
 @Component({

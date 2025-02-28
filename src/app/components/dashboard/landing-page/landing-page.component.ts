@@ -5,10 +5,10 @@ import { Course } from 'src/app/core/models/course.model';
 import { selectCoursesList } from 'src/app/state/item/item.selectors';
 import { CourseApiActions } from 'src/app/state/item/item.actions';
 import { Router } from '@angular/router';
-import { BannerComponent } from 'src/app/components/banner/banner.component';
+import { BannerComponent } from 'src/app/components/dashboard/banner/banner.component';
 import { CommonModule } from '@angular/common';
-import { LayoutTemplateComponent } from "../layout-template/layout-template.component";
-import { GenericCardComponent } from "../generic-card/generic-card.component";
+import { LayoutTemplateComponent } from '../layout-template/layout-template.component';
+import { GenericCardComponent } from '../../generic-card/generic-card.component';
 
 @Component({
   selector: 'app-landing-page',
@@ -18,8 +18,8 @@ import { GenericCardComponent } from "../generic-card/generic-card.component";
     CommonModule,
     BannerComponent,
     LayoutTemplateComponent,
-    GenericCardComponent
-],
+    GenericCardComponent,
+  ],
 })
 export class LandingPageComponent {
   allCourses$: Observable<Course[]> | undefined;
@@ -32,7 +32,7 @@ export class LandingPageComponent {
   }
 
   onNavigateToAllCourses() {
-    this.router.navigateByUrl('/courses');
+    this.router.navigateByUrl('/dashboard/courses');
   }
 
   onCourseDetails(id: number) {

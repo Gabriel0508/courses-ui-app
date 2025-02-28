@@ -2,7 +2,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: calc(100vh - 64px);
+  grid-template-rows: 100vh;
   .bg-container {
     background: url(../../../../assets/images/register-bg.webp) no-repeat;
     background-position: center center;

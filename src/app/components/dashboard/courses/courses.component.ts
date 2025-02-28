@@ -1,6 +1,15 @@
-import { ChangeDetectionStrategy, Component, inject, TemplateRef } from '@angular/core';
-import {MatButtonModule} from '@angular/material/button';
-import {MatDialog, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  TemplateRef,
+} from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import {
+  MatDialog,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { Store, select } from '@ngrx/store';
 import { delay, Observable, take } from 'rxjs';
 import { Course } from 'src/app/core/models/course.model';
@@ -16,7 +25,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { AppState } from 'src/app/core/models/appState.model';
-import { LayoutTemplateComponent } from "../layout-template/layout-template.component";
+import { LayoutTemplateComponent } from '../layout-template/layout-template.component';
 
 @Component({
   selector: 'app-courses',
@@ -29,9 +38,9 @@ import { LayoutTemplateComponent } from "../layout-template/layout-template.comp
     MatButtonModule,
     MatIconModule,
     LayoutTemplateComponent,
-    MatDialogModule
-],
-changeDetection: ChangeDetectionStrategy.OnPush,
+    MatDialogModule,
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CoursesComponent {
   items$: Observable<Course[]> | undefined;
@@ -48,7 +57,7 @@ export class CoursesComponent {
 
   constructor(
     private readonly store: Store<AppState>,
-    private readonly router: Router,
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {
@@ -75,7 +84,7 @@ export class CoursesComponent {
 
   openModal() {
     this.dialog.open(ModalComponent, {
-      disableClose: true
+      disableClose: true,
     });
   }
 

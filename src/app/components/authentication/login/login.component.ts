@@ -45,7 +45,6 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private readonly store: Store,
-    private router: Router
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -56,7 +55,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(AuthActions.getAuthState());
+    this.store.dispatch(AuthActions.getAuthState()); //TODO: check why this is needed here
   }
 
   onSubmit() {
