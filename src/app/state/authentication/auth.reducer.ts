@@ -1,17 +1,15 @@
 import { createReducer, on } from '@ngrx/store';
 import { AuthActions } from './auth.actions';
-import { User } from 'src/app/core/models/user.model';
+import { User } from 'firebase/auth';
 
 export interface AuthState {
   user: User | null;
- // isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
 }
 
 export const initialState: AuthState = {
   user: null,
- // isAuthenticated: false,
   isLoading: false,
   error: null,
 };
@@ -93,7 +91,6 @@ export const authReducer = createReducer(
   on(AuthActions.authStateChanged, (state, { user }) => ({
     ...state,
     user: user ? {...user } : null,
-    isAuthenticated: !!user,
     isLoading: false,
     error: null,
   }))

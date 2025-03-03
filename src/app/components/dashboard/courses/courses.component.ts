@@ -20,12 +20,12 @@ import {
 } from 'src/app/state/item/item.selectors';
 import { Router } from '@angular/router';
 import { LoadingSpinnerComponent } from 'src/app/components/loading-spinner/loading-spinner.component';
-import { ModalComponent } from 'src/app/components/modal/modal.component';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { AppState } from 'src/app/core/models/appState.model';
 import { LayoutTemplateComponent } from '../layout-template/layout-template.component';
+import { CreateCourseComponent } from '../../modal/create-course-modal/create-course-modal.component';
 
 @Component({
   selector: 'app-courses',
@@ -83,7 +83,7 @@ export class CoursesComponent {
   }
 
   openModal() {
-    this.dialog.open(ModalComponent, {
+    this.dialog.open(CreateCourseComponent, {
       disableClose: true,
     });
   }

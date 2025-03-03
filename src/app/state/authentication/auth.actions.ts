@@ -1,5 +1,5 @@
 import { createActionGroup, emptyProps, props } from "@ngrx/store";
-import { User } from "src/app/core/models/user.model";
+import { User } from "firebase/auth";
 
 export const AuthActions = createActionGroup({
     source: 'Authentication',
@@ -9,7 +9,7 @@ export const AuthActions = createActionGroup({
             password: string
         }>(),
         'loginSuccess': props<{
-          user: User
+          user: User | null
         }>(),
         'loginFailure': props<{
             error: string

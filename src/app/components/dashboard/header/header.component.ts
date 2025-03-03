@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,8 +16,15 @@ import {
   selectIsAuthenticated,
   selectIsLoading,
 } from 'src/app/state/authentication/auth.selector';
-import { Observable } from 'rxjs';
-import { User } from 'src/app/core/models/user.model';
+import { Observable, Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { LanguageModalComponent } from '../../modal/language-modal/language-modal.component';
+import {
+  selectAvailableLanguage,
+  selectCurrentLanguage,
+} from 'src/app/state/language/language.selector';
+import { LanguageActions } from 'src/app/state/language/language.actions';
+import { User } from 'firebase/auth';
 
 @Component({
   selector: 'app-header',
@@ -33,36 +40,62 @@ import { User } from 'src/app/core/models/user.model';
     ReactiveFormsModule,
     TranslateModule,
     MatDividerModule,
-    MatListModule
-  ],
+    MatListModule],
   standalone: true,
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnDestroy {
   searchCourseForm: FormGroup = new FormGroup({});
   user$: Observable<User | null>;
   isLoggedIn$: Observable<boolean>;
   isLoading$: Observable<boolean>;
+  availableLanguages$ = this.store.pipe(select(selectAvailableLanguage));
+  languageSubscription: Subscription;
+  isProfileDrawerOpen: boolean = false;
 
   constructor(
     public translate: TranslateService,
-    private readonly store: Store
+    private readonly store: Store,
+    public dialog: MatDialog
   ) {
     this.user$ = this.store.pipe(select(selectCurrentUser));
     this.isLoggedIn$ = this.store.select(selectIsAuthenticated);
     this.isLoading$ = this.store.select(selectIsLoading);
-    translate.addLangs(['en', 'de']);
-    translate.setDefaultLang('en');
+    this.languageSubscription = this.store
+      .pipe(select(selectCurrentLanguage))
+      .subscribe((language) => {
+        this.translate.use(language);
+      });
   }
 
-  onSwitchLang(lang: string) {
-    this.translate.use(lang);
+  ngOnDestroy(): void {
+    if (this.languageSubscription) {
+      this.languageSubscription.unsubscribe();
+    }
+  }
+
+  onSwitchLang() {
+    this.availableLanguages$.subscribe((languages) => {
+      const dialogRef = this.dialog.open(LanguageModalComponent, {
+        data: { languages: languages },
+        disableClose: true,
+      });
+
+      dialogRef.afterClosed().subscribe((selectedLanguage: string) => {
+        if (selectedLanguage) {
+          this.store.dispatch(
+            LanguageActions.setLanguage({ language: selectedLanguage })
+          );
+        }
+      });
+    });
   }
 
   onLogout() {
-    if (this.isLoggedIn$) {
-      console.log('user logged in', this.isLoggedIn$);
+    this.store.dispatch(AuthActions.logout());
+  }
 
-      this.store.dispatch(AuthActions.logout());
-    }
+  onToggleProfileDrawer(drawer: MatDrawer) {
+    this.isProfileDrawerOpen = !drawer.opened;
+    drawer.toggle();
   }
 }

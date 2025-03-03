@@ -3,7 +3,16 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { AuthActions } from './auth.actions';
-import { catchError, exhaustMap, map, mergeMap, of, switchMap, tap } from 'rxjs';
+import {
+  catchError,
+  exhaustMap,
+  from,
+  map,
+  mergeMap,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 
 @Injectable()
 export class AuthEffects {
@@ -19,7 +28,9 @@ export class AuthEffects {
       exhaustMap((action) =>
         this.authService.login(action.email, action.password).pipe(
           tap(() => console.log('Firebase login successful')),
-          map((user) => AuthActions.loginSuccess({ user })),
+          map(() =>
+            AuthActions.loginSuccess({ user: this.authService.getUser() })
+          ),
           catchError((error) => of(AuthActions.loginFailure({ error })))
         )
       )
@@ -53,53 +64,34 @@ export class AuthEffects {
     )
   );
 
-  // logout$ = createEffect(() =>
+  logout$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.logout),
+      mergeMap(() =>
+        from(this.authService.logout()).pipe(
+          map(() => AuthActions.logoutSuccess()),
+          catchError((error) => of(AuthActions.logoutFailure({ error })))
+        )
+      )
+    )
+  );
+
+  // getAuthState$ = createEffect(() =>
   //   this.actions$.pipe(
-  //     ofType(AuthActions.logout),
-  //     mergeMap(() =>
-  //       this.authService.logout().pipe(
-  //         map(() => AuthActions.logoutSuccess()),
-  //         catchError((error) =>
-  //           of(AuthActions.logoutFailure({ error }))
-  //         )
+  //     ofType(AuthActions.getAuthState),
+  //     exhaustMap(() =>
+  //       this.authService.getAuthState().pipe(
+  //         map((user) => {
+  //           console.log('user', user);
+  //           return user
+  //             ? AuthActions.loginSuccess({ user })
+  //             : AuthActions.logoutSuccess();
+  //         }),
+  //         catchError((error) => of(AuthActions.loginFailure({ error })))
   //       )
   //     )
   //   )
   // );
-
-  logout$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthActions.logout),
-      tap(() => console.log('Logout action dispatched')),
-      exhaustMap(() =>
-        this.authService.logout().pipe(
-          tap(() => console.log('Logout successful')),
-          map(() => AuthActions.logoutSuccess()),
-          catchError((error) => {
-            console.error('Logout error in effect');
-            return of(AuthActions.logoutFailure({ error: 'Unknown error' }));
-          })
-        )
-      )
-    )
-  );
-
-  getAuthState$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthActions.getAuthState),
-      switchMap(() =>
-        this.authService.getAuthState().pipe(
-          map((user) => {
-            console.log('user', user);
-            return user
-              ? AuthActions.loginSuccess({ user })
-              : AuthActions.logoutSuccess();
-          }),
-          catchError((error) => of(AuthActions.loginFailure({ error })))
-        )
-      )
-    )
-  );
 
   authSuccess$ = createEffect(
     () =>
@@ -109,7 +101,7 @@ export class AuthEffects {
           AuthActions.loginWithGoogleSuccess,
           AuthActions.registerSuccess
         ),
-        tap(() => this.router.navigate(['/dashboard']))
+        exhaustMap(() => this.router.navigate(['/dashboard']))
       ),
     { dispatch: false }
   );

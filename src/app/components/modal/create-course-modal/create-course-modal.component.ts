@@ -2,10 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
   inject,
-  Input,
-  Output,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -23,8 +20,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-modal',
-  templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.scss'],
+  templateUrl: './create-course-modal.component.html',
+  styleUrls: ['./create-course-modal.component.scss'],
   imports: [
     ReactiveFormsModule,
     CommonModule,
@@ -35,7 +32,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ModalComponent {
+export class CreateCourseComponent {
   readonly dialog = inject(MatDialog);
   createItemForm: FormGroup = new FormGroup({});
 

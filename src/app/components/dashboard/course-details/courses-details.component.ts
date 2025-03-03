@@ -4,18 +4,16 @@ import { Course } from 'src/app/core/models/course.model';
 import { ActivatedRoute } from '@angular/router';
 import { CourseApiActions } from 'src/app/state/item/item.actions';
 import { selectSelectedCourseId } from 'src/app/state/item/item.selectors';
-import { HeaderComponent } from 'src/app/components/dashboard/header/header.component';
 import { LoadingSpinnerComponent } from 'src/app/components/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-courses-details',
   templateUrl: './courses-details.component.html',
   styleUrls: ['./courses-details.component.scss'],
-  imports: [HeaderComponent, LoadingSpinnerComponent],
+  imports: [LoadingSpinnerComponent],
 })
 export class CoursesDetailsComponent implements OnInit {
-  course: Course | undefined;
-
+  course: Course | undefined; 
   constructor(private readonly store: Store, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
