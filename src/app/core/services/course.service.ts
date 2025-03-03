@@ -12,7 +12,6 @@ export class CourseService {
   constructor(private readonly http: HttpClient) {}
 
   getCourses(): Observable<Course[]> {
-    console.log();
     return this.http.get<Course[]>(`${this.courseUrl}`);
   }
 
