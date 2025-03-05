@@ -8,9 +8,14 @@ import {
   signInWithPopup,
   authState,
   User,
+  UserCredential,
 } from '@angular/fire/auth';
-import { from, Observable } from 'rxjs';
-//import { User } from '../models/user.model';
+import { from, map, Observable } from 'rxjs';
+
+interface AuthResult {
+  user: User | null;
+  credential?: any;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +23,16 @@ import { from, Observable } from 'rxjs';
 export class AuthService {
   constructor(private auth: Auth) {}
 
-  login(email: string, password: string): Observable<any> {
-    return from(signInWithEmailAndPassword(this.auth, email, password));
+  // login(email: string, password: string): Observable<any> {
+  //   return from(signInWithEmailAndPassword(this.auth, email, password));
+  // }
+  login(email: string, password: string): Observable<AuthResult> {
+    return from(signInWithEmailAndPassword(this.auth, email, password)).pipe(
+      map((userCredential: UserCredential) => ({
+        user: userCredential.user,
+        credential: userCredential
+      }))
+    );
   }
 
   register(email: string, password: string): Observable<any> {

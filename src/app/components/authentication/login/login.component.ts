@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -11,7 +11,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
 import { AuthActions } from 'src/app/state/authentication/auth.actions';
 import { Store } from '@ngrx/store';
 import {
@@ -20,6 +19,7 @@ import {
 } from 'src/app/state/authentication/auth.selector';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { ValidationsService } from 'src/app/core/services/validations.service';
 
 @Component({
   selector: 'app-login',
@@ -31,42 +31,38 @@ import { AuthService } from 'src/app/core/services/auth.service';
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
-    MatCardModule,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   standalone: true,
 })
-export class LoginComponent {
-  loginForm: FormGroup;
+export class LoginComponent implements OnInit {
+  loginForm: FormGroup = new FormGroup({});
   loading$: Observable<boolean>;
   error$: Observable<string | null>;
   hidePassword = true;
 
   constructor(
-    private fb: FormBuilder,
     private readonly store: Store,
     private router: Router,
-    private auth: AuthService
+    private auth: AuthService,
+    private readonly fb: FormBuilder,
+    private readonly validationService: ValidationsService
   ) {
-    this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-    });
     this.loading$ = this.store.select(selectIsLoading);
     this.error$ = this.store.select(selectAuthError);
   }
 
+  ngOnInit(): void {
+    this.initLoginForm();
+  }
+
   onSubmit() {
-    // if (this.loginForm.valid) {
-    //   const { email, password } = this.loginForm.value;
-    //   this.store.dispatch(AuthActions.login({ email, password }));
-    //   console.log('login done');
-    // }
     const { email, password } = this.loginForm.value;
     this.auth
-      .login(email, password)
-      .subscribe(() => this.router.navigate(['/dashboard']));
+    .login(email, password)
+      .subscribe(() => this.router.navigate(['/dashboard']));  
+    //this.store.dispatch(AuthActions.login({ email, password }));
   }
 
   loginWithGoogle() {
@@ -77,6 +73,20 @@ export class LoginComponent {
     event.preventDefault();
     event.stopPropagation();
     this.hidePassword = !this.hidePassword;
-    console.log('Password visibility toggled:', !this.hidePassword);
+  }
+
+  onInputsValidation(field: string, errorType: string): boolean {
+    return this.validationService.isFieldValid(
+      field,
+      errorType,
+      this.loginForm
+    );
+  }
+
+  private initLoginForm() {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
   }
 }

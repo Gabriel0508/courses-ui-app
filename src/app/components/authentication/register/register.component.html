@@ -22,6 +22,12 @@
             placeholder="Your email address"
             required
           />
+          <mat-error *ngIf="onInputsValidation('email', 'required')">
+            {{ "Email is required" }}
+          </mat-error>
+          <mat-error *ngIf="onInputsValidation('email', 'email')">
+            {{ "Email is invalid" }}
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
@@ -31,24 +37,49 @@
             type="password"
             formControlName="password"
             placeholder="Password"
+            [type]="hidePassword ? 'password' : 'text'"
             required
           />
+          <button
+            mat-icon-button
+            matSuffix
+            [disabled]="!registerForm.get('password')?.value"
+            (click)="togglePasswordVisibility($event)"
+            [attr.aria-label]="'Toggle password visibility'"
+            type="button"
+          >
+            <mat-icon>{{
+              hidePassword ? "visibility_off" : "visibility"
+            }}</mat-icon>
+          </button>
+          @if(onInputsValidation('password', 'required')) {
+          <mat-error>
+            {{ "Password is required" }}
+          </mat-error>
+          } @else if(onInputsValidation('password', 'minlength')) {
+          <mat-error>
+            {{ "Password should contain minimum six characters" }}
+          </mat-error>
+          }
         </mat-form-field>
-
-        @if (errorMessage) {
-        <div class="error">{{ errorMessage }}</div>
-        }
+        <!--TODO: used just with state-->
+        <!-- @if(error$ | async) {
+        <mat-error class="service-error">
+          {{ 'An account with this email already exists. Sign in or register with a different email.' }}
+        </mat-error>
+        } -->
+        
       </div>
-        <button
-          mat-raised-button
-          type="button"
-          [disabled]="!registerForm.valid"
-          (click)="onSubmit()"
-          class="register-btn"
-        >
-          <span>Register</span>
-          <mat-icon>keyboard_arrow_right</mat-icon>
-        </button>
+      <button
+        mat-raised-button
+        type="button"
+        [disabled]="!registerForm.valid"
+        (click)="onSubmit()"
+        class="register-btn"
+      >
+        <span>Register</span>
+        <mat-icon>keyboard_arrow_right</mat-icon>
+      </button>
     </form>
   </div>
 </div>

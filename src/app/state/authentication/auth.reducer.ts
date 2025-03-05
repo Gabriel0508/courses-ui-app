@@ -23,10 +23,9 @@ export const authReducer = createReducer(
     error: null,
   })),
   on(AuthActions.loginSuccess, (state, { user }) => {
-    let copy = JSON.parse(JSON.stringify(user));
     return{
     ...state,
-    user: copy,
+    user,
     isLoading: false,
     error: null,
   }}),
