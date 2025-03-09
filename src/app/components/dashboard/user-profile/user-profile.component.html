@@ -1,0 +1,49 @@
+<app-layout-template>
+  @if(user) {
+  <div class="profile-container">
+    <div class="left-container">
+      <p>some other features</p>
+    </div>
+    <div class="form-container">
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline">
+          <mat-label>Display Name</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="displayName"
+            placeholder="User Name"
+            required
+          />
+          <mat-hint>
+            {{
+              "Your name may appear around Audemy. You can remove it at any time."
+            }}
+          </mat-hint>
+          <mat-error *ngIf="onInputsValidation('displayName', 'required')">
+            {{ "Display Name is required" }}
+          </mat-error>
+          <mat-error *ngIf="onInputsValidation('displayName', 'minlength')">
+            {{ "Display Name should contain minimum 4 characters." }}
+          </mat-error>
+        </mat-form-field>
+
+        <input type="file" (change)="onFileSelected($event)" />
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="profileForm.invalid"
+        >
+          Update Profile
+        </button>
+      </form>
+    </div>
+  </div>
+  } @else {
+  <div>
+    <p>Please log in to view your profile.</p>
+  </div>
+  }
+</app-layout-template>

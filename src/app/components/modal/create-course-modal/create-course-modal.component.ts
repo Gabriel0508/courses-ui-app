@@ -46,7 +46,7 @@ export class CreateCourseComponent {
     this.iniFormItem();
   }
 
-  onInputsValidation(field: string, errorType: string): string {
+  onInputsValidation(field: string, errorType: string): boolean {
     return this.validationsService.isFieldValid(
       field,
       errorType,

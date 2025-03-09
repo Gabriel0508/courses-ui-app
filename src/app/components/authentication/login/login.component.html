@@ -12,6 +12,12 @@
           placeholder="Your email address"
           required
         />
+        <mat-error *ngIf="onInputsValidation('email', 'required')">
+          {{ "Email is required" }}
+        </mat-error>
+        <mat-error *ngIf="onInputsValidation('email', 'email')">
+          {{ "Please enter a valid email address." }}
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full-width">
@@ -36,17 +42,27 @@
             hidePassword ? "visibility_off" : "visibility"
           }}</mat-icon>
         </button>
+        @if(onInputsValidation('password', 'required')) {
+        <mat-error>
+          {{ "Password is required" }}
+        </mat-error>
+        } @else if(onInputsValidation('password', 'minlength')) {
+        <mat-error>
+          {{ "Password must be at least 6 characters long." }}
+        </mat-error>
+        }
       </mat-form-field>
-
-      @if (error$ | async; as error) {
-      <div class="error">{{ error }}</div>
-      }
+      <!-- @if(error$ | async) {
+      <mat-error class="service-error">
+        {{ "Oops! That didn't work. Double-check your credentials and try again." }}
+      </mat-error> 
+      }-->
     </div>
     <div class="btn-container">
       <button
         mat-raised-button
         type="button"
-        [disabled]="(loading$ | async) || !loginForm.valid"
+        [disabled]="!loginForm.valid"
         (click)="onSubmit()"
       >
         Login

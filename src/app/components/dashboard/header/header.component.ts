@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -25,6 +25,7 @@ import {
 } from 'src/app/state/language/language.selector';
 import { LanguageActions } from 'src/app/state/language/language.actions';
 import { User } from 'firebase/auth';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -40,36 +41,42 @@ import { User } from 'firebase/auth';
     ReactiveFormsModule,
     TranslateModule,
     MatDividerModule,
-    MatListModule],
+    MatListModule,
+  ],
   standalone: true,
 })
-export class HeaderComponent implements OnDestroy {
+export class HeaderComponent implements OnInit, OnDestroy {
   searchCourseForm: FormGroup = new FormGroup({});
-  user$: Observable<User | null>;
-  isLoggedIn$: Observable<boolean>;
-  isLoading$: Observable<boolean>;
+  user: User | null = null;
   availableLanguages$ = this.store.pipe(select(selectAvailableLanguage));
-  languageSubscription: Subscription;
+  languageSubscription: Subscription | undefined; //TODO: make a list of subscriptions
+  authStateSubscription: Subscription | undefined;
   isProfileDrawerOpen: boolean = false;
 
   constructor(
-    public translate: TranslateService,
+    private translate: TranslateService,
     private readonly store: Store,
-    public dialog: MatDialog
+    private readonly auth: AuthService,
+    private dialog: MatDialog
   ) {
-    this.user$ = this.store.pipe(select(selectCurrentUser));
-    this.isLoggedIn$ = this.store.select(selectIsAuthenticated);
-    this.isLoading$ = this.store.select(selectIsLoading);
     this.languageSubscription = this.store
       .pipe(select(selectCurrentLanguage))
       .subscribe((language) => {
         this.translate.use(language);
       });
+      this.user = this.auth.getUser();
+  }
+
+  ngOnInit(): void {
+    this.authStateSubscription = this.auth.getAuthState().subscribe((user) => {
+      this.user = user;
+    });
   }
 
   ngOnDestroy(): void {
-    if (this.languageSubscription) {
-      this.languageSubscription.unsubscribe();
+    if (this.languageSubscription || this.authStateSubscription) {
+      this.languageSubscription?.unsubscribe();
+      this.authStateSubscription?.unsubscribe();
     }
   }
 

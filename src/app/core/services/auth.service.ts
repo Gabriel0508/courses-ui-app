@@ -8,9 +8,9 @@ import {
   signInWithPopup,
   authState,
   User,
+  updateProfile,
 } from '@angular/fire/auth';
-import { from, Observable } from 'rxjs';
-//import { User } from '../models/user.model';
+import { from, map, Observable, of, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -22,8 +22,29 @@ export class AuthService {
     return from(signInWithEmailAndPassword(this.auth, email, password));
   }
 
-  register(email: string, password: string): Observable<any> {
-    return from(createUserWithEmailAndPassword(this.auth, email, password));
+  register(
+    email: string,
+    password: string,
+    displayName?: string
+  ): Observable<any> {
+    return from(
+      createUserWithEmailAndPassword(this.auth, email, password)
+    ).pipe(
+      switchMap((userCredential: any) => {
+        // After successful registration, update the user's profile
+        if (displayName) {
+          return from(
+            updateProfile(userCredential.user, {
+              displayName: displayName || null, // Use null if no display name is provided
+            })
+          ).pipe(
+            map(() => userCredential) // Return the original userCredential
+          );
+        } else {
+          return of(userCredential); // If no profile info, just return the userCredential
+        }
+      })
+    );
   }
 
   loginWithGoogle(): Observable<any> {
@@ -45,5 +66,14 @@ export class AuthService {
 
   getUser() {
     return this.auth.currentUser;
+  }
+
+  updateProfile(displayName: string): Observable<void> {
+    const user = this.auth.currentUser;
+    if (!user) {
+      return from(Promise.reject('No user is currently signed in.'));
+    }
+
+    return from(updateProfile(user, { displayName: displayName }));
   }
 }

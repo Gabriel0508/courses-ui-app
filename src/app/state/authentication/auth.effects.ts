@@ -3,16 +3,7 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { AuthActions } from './auth.actions';
-import {
-  catchError,
-  exhaustMap,
-  from,
-  map,
-  mergeMap,
-  of,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { catchError, exhaustMap, from, map, mergeMap, of, tap } from 'rxjs';
 
 @Injectable()
 export class AuthEffects {
@@ -28,10 +19,11 @@ export class AuthEffects {
       exhaustMap((action) =>
         this.authService.login(action.email, action.password).pipe(
           tap(() => console.log('Firebase login successful')),
-          map(() =>
-            AuthActions.loginSuccess({ user: this.authService.getUser() })
-          ),
-          catchError((error) => of(AuthActions.loginFailure({ error })))
+          map((user) => AuthActions.loginSuccess({ user: user.user })),
+          catchError((error) => {
+            console.error('Login failed:', error);
+            return of(AuthActions.loginFailure({ error }));
+          })
         )
       )
     )
@@ -43,7 +35,9 @@ export class AuthEffects {
       exhaustMap((action) =>
         this.authService.register(action.email, action.password).pipe(
           //TODO: check the display name
-          map((user) => AuthActions.registerSuccess({ user })),
+          map((userCredentials) =>
+            AuthActions.registerSuccess({ user: userCredentials.user })
+          ),
           catchError((error) => of(AuthActions.registerFailure({ error })))
         )
       )
@@ -68,9 +62,15 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.logout),
       mergeMap(() =>
-        from(this.authService.logout()).pipe(
+        this.authService.logout().pipe(
           map(() => AuthActions.logoutSuccess()),
-          catchError((error) => of(AuthActions.logoutFailure({ error })))
+          catchError((error) =>
+            of(
+              AuthActions.logoutFailure({
+                error: error.message || 'Logout failed',
+              })
+            )
+          )
         )
       )
     )
@@ -93,6 +93,19 @@ export class AuthEffects {
   //   )
   // );
 
+  // authSuccess$ = createEffect(
+  //   () =>
+  //     this.actions$.pipe(
+  //       ofType(
+  //         AuthActions.loginSuccess,
+  //         AuthActions.loginWithGoogleSuccess,
+  //         AuthActions.registerSuccess
+  //       ),
+  //       exhaustMap(() => this.router.navigate(['/dashboard']))
+  //     ),
+  //   { dispatch: false }
+  // );
+
   authSuccess$ = createEffect(
     () =>
       this.actions$.pipe(
@@ -101,7 +114,7 @@ export class AuthEffects {
           AuthActions.loginWithGoogleSuccess,
           AuthActions.registerSuccess
         ),
-        exhaustMap(() => this.router.navigate(['/dashboard']))
+        map(() => this.router.navigate(['/dashboard']))
       ),
     { dispatch: false }
   );

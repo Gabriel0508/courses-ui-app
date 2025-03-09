@@ -3,8 +3,8 @@ import { HeaderComponent } from './header/header.component';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [HeaderComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
+  imports: [HeaderComponent],
 })
 export class DashboardComponent {}

@@ -19,14 +19,14 @@ export const AuthActions = createActionGroup({
             password: string
         }>(),
         'registerSuccess': props<{
-          user: User 
+          user: User | null
         }>(),
         'registerFailure': props<{
             error: string
         }>(),
         'loginWithGoogle': emptyProps(),
         'loginWithGoogleSuccess': props<{
-          user: User 
+          user: User | null
         }>(),
         'loginWithGoogleFailure': props<{
             error: string
