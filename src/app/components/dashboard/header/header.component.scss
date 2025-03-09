@@ -19,6 +19,12 @@ mat-toolbar {
       align-items: center;
       button {
         margin: 0 16px;
+        .user-image {
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
       }
     }
   }

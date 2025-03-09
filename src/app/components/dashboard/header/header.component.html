@@ -9,16 +9,44 @@
   <h3>AUDEMY</h3>
 
   <div class="nav-buttons">
-    <button routerLink="/dashboard/home" mat-button [disabled]="isProfileDrawerOpen">{{ 'header.home' | translate }}</button>
-    <button routerLink="/dashboard/courses" mat-button [disabled]="isProfileDrawerOpen">{{ 'header.courses' | translate }}</button>
-    <button mat-icon-button (click)="onToggleProfileDrawer(drawerProfile)">
-      <mat-icon> account_circle </mat-icon>
+    <button
+      routerLink="/dashboard/home"
+      mat-button
+      [disabled]="isProfileDrawerOpen"
+    >
+      {{ "header.home" | translate }}
     </button>
+    <button
+      routerLink="/dashboard/courses"
+      mat-button
+      [disabled]="isProfileDrawerOpen"
+    >
+      {{ "header.courses" | translate }}
+    </button>
+    @if(user) {
+    <button mat-icon-button (click)="onToggleProfileDrawer(drawerProfile)">
+      @if(!drawerProfile.opened && user.photoURL){
+      <img
+        [src]="
+          user.photoURL
+            ? user.photoURL
+            : '../../../assets/images/logo-with-audemy-with-blue-color-upscaled.jpg'
+        "
+        alt="user profile"
+        class="user-image"
+      />
+      } @else if (!drawerProfile.opened && !user.photoURL) {
+      <mat-icon>account_circle</mat-icon>
+      } @else {
+      <mat-icon>close</mat-icon>
+      }
+    </button>
+    }
   </div>
 </mat-toolbar>
 
 <mat-drawer-container autosize>
-  <mat-drawer #drawerMenu position="start" mode="over">
+  <!-- <mat-drawer #drawerMenu position="start" mode="over">
     <mat-divider></mat-divider>
 
     <button mat-button class="menu-button" routerLink="/home">
@@ -40,66 +68,124 @@
       <mat-icon>help</mat-icon>
       <span>Help</span>
     </button>
-  </mat-drawer>
+  </mat-drawer> -->
 
-  <mat-drawer #drawerProfile position="end" mode="over" class="profile" (closed)="isProfileDrawerOpen = false">
-    @if(user$ | async; as user) {
-    <div class="user" routerLink="/profile">
+  <mat-drawer
+    #drawerProfile
+    position="end"
+    mode="over"
+    class="profile"
+    (closed)="isProfileDrawerOpen = false"
+  >
+    @if(user) {
+    <div
+      class="user"
+      routerLink="/dashboard/profile"
+      (click)="drawerProfile.close()"
+    >
       <img
         class="user-avatar mat-elevation-z8"
-        src="../../../assets/images/logo-with-audemy-with-blue-color-upscaled.jpg"
+        [src]="
+          user.photoURL
+            ? user.photoURL
+            : '../../../assets/images/logo-with-audemy-with-blue-color-upscaled.jpg'
+        "
+        alt="user-profile"
       />
       <div class="user-details">
-        <h4 class="user-name">{{ user.displayName || "User Name" }}</h4>
-        <p class="user-email">{{ user.email }}</p>
+        <h4 class="user-name">{{ user.displayName || "User" }}</h4>
+        <p class="user-email">{{ user.email || "No Email" }}</p>
       </div>
     </div>
     }
 
     <mat-divider></mat-divider>
 
-    <button mat-button class="menu-button" routerLink="/help" (click)="drawerProfile.close()">
+    <button
+      mat-button
+      class="menu-button"
+      routerLink="/help"
+      (click)="drawerProfile.close()"
+    >
       <mat-icon>school</mat-icon>
       <span>My Learning</span>
     </button>
 
-    <button mat-button class="menu-button" routerLink="/help" (click)="drawerProfile.close()">
+    <button
+      mat-button
+      class="menu-button"
+      routerLink="/help"
+      (click)="drawerProfile.close()"
+    >
       <mat-icon>star</mat-icon>
       <span>Wishlist</span>
     </button>
     <mat-divider></mat-divider>
-    <button mat-button class="menu-button" routerLink="/help" (click)="drawerProfile.close()">
+    <button
+      mat-button
+      class="menu-button"
+      routerLink="/help"
+      (click)="drawerProfile.close()"
+    >
       <mat-icon>notifications</mat-icon>
       <span>Notifications</span>
     </button>
 
-    <button mat-button class="menu-button" routerLink="/help" (click)="drawerProfile.close()">
+    <button
+      mat-button
+      class="menu-button"
+      routerLink="/help"
+      (click)="drawerProfile.close()"
+    >
       <mat-icon>email</mat-icon>
       <span>Messages</span>
     </button>
     <mat-divider></mat-divider>
-    <button mat-button class="menu-button" (click)="onSwitchLang(); drawerProfile.close()">
+    <button
+      mat-button
+      class="menu-button"
+      (click)="onSwitchLang(); drawerProfile.close()"
+    >
       <mat-icon>language</mat-icon>
       <span>Language</span>
     </button>
     <mat-divider></mat-divider>
-    <button mat-button class="menu-button" routerLink="/help" (click)="drawerProfile.close()">
+    <button
+      mat-button
+      class="menu-button"
+      routerLink="/"
+      (click)="drawerProfile.close()"
+    >
       <mat-icon>settings</mat-icon>
       <span>Account settings</span>
     </button>
 
-    <button mat-button class="menu-button" routerLink="/help" (click)="drawerProfile.close()">
+    <button
+      mat-button
+      class="menu-button"
+      routerLink="/dashboard/profile"
+      (click)="drawerProfile.close()"
+    >
       <mat-icon>edit</mat-icon>
       <span>Edit profile</span>
     </button>
 
     <mat-divider></mat-divider>
-    <button mat-button class="menu-button" routerLink="/help" (click)="drawerProfile.close()">
+    <button
+      mat-button
+      class="menu-button"
+      routerLink="/help"
+      (click)="drawerProfile.close()"
+    >
       <mat-icon>help</mat-icon>
       <span>Help and Support</span>
     </button>
 
-    <button mat-button class="menu-button" (click)="onLogout(); drawerProfile.close()">
+    <button
+      mat-button
+      class="menu-button"
+      (click)="onLogout(); drawerProfile.close()"
+    >
       <mat-icon>logout</mat-icon>
       <span>Logout</span>
     </button>

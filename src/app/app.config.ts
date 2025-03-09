@@ -20,26 +20,21 @@ import { courseReducer } from './state/item/item.reducers';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
-import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { authReducer } from './state/authentication/auth.reducer';
 import { AuthEffects } from './state/authentication/auth.effects';
 import { languageReducer } from './state/language/language.reducer';
 import { LanguageEffects } from './state/language/language.effects';
-
-const firebaseConfig = {
-  apiKey: 'AIzaSyA5WMooUkLJUXoV8qkg_8oVjYsr3WjLnuk',
-  authDomain: 'courses-app-be1.firebaseapp.com',
-  projectId: 'courses-app-be1',
-  storageBucket: 'courses-app-be1.firebasestorage.app',
-  messagingSenderId: '297137314002',
-  appId: '1:297137314002:web:c696e23c06ca22d3ed750b',
-  measurementId: 'G-S2ZBQ90TC9',
-};
+import { environment } from 'src/environments/environments';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    // provideFirestore(() => getFirestore()),
+    // provideStorage(() => getStorage()),
+    // { provide: AngularFireStorage, useClass: AngularFireStorage },
     provideStore({
       courses: courseReducer,
       auth: authReducer,
@@ -65,8 +60,6 @@ export const appConfig: ApplicationConfig = {
         defaultLanguage: 'en',
       })
     ),
-    provideFirebaseApp(() => initializeApp(firebaseConfig)),
-    provideAuth(() => getAuth()),
   ],
 };
 

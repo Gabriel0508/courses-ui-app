@@ -12,7 +12,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AuthActions } from 'src/app/state/authentication/auth.actions';
 import { ValidationsService } from 'src/app/core/services/validations.service';
 import { Observable } from 'rxjs';
 import { selectAuthError } from 'src/app/state/authentication/auth.selector';
@@ -55,11 +54,11 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     if (this.registerForm.valid) {
-      const { email, password } = this.registerForm.value;
-     // this.store.dispatch(AuthActions.register({ email, password }));
-     this.authService
-    .register(email, password)
-      .subscribe(() => this.router.navigate(['/dashboard'])); 
+      const { email, password, displayName } = this.registerForm.value;
+      // this.store.dispatch(AuthActions.register({ email, password }));
+      this.authService
+        .register(email, password, displayName)
+        .subscribe(() => this.router.navigate(['/dashboard']));
     }
   }
 
@@ -79,6 +78,7 @@ export class RegisterComponent implements OnInit {
 
   private initRegisterForm() {
     this.registerForm = this.fb.group({
+      displayName: ['', [Validators.required, Validators.minLength(4)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });

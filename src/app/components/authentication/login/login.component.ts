@@ -38,8 +38,8 @@ import { ValidationsService } from 'src/app/core/services/validations.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup = new FormGroup({});
-  loading$: Observable<boolean>;
-  error$: Observable<string | null>;
+  //loading$: Observable<boolean>;
+ // error$: Observable<string | null>;
   hidePassword = true;
 
   constructor(
@@ -49,8 +49,8 @@ export class LoginComponent implements OnInit {
     private readonly fb: FormBuilder,
     private readonly validationService: ValidationsService
   ) {
-    this.loading$ = this.store.select(selectIsLoading);
-    this.error$ = this.store.select(selectAuthError);
+    //this.loading$ = this.store.select(selectIsLoading);
+    //this.error$ = this.store.select(selectAuthError);
   }
 
   ngOnInit(): void {
@@ -60,13 +60,16 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     const { email, password } = this.loginForm.value;
     this.auth
-    .login(email, password)
-      .subscribe(() => this.router.navigate(['/dashboard']));  
+      .login(email, password)
+      .subscribe(() => this.router.navigate(['/dashboard']));
     //this.store.dispatch(AuthActions.login({ email, password }));
   }
 
   loginWithGoogle() {
-    this.store.dispatch(AuthActions.loginWithGoogle());
+    this.auth
+      .loginWithGoogle()
+      .subscribe(() => this.router.navigate(['/dashboard']));
+    //this.store.dispatch(AuthActions.loginWithGoogle());
   }
 
   togglePasswordVisibility(event: Event) {

@@ -52,17 +52,17 @@
         </mat-error>
         }
       </mat-form-field>
-      @if(error$ | async) {
+      <!-- @if(error$ | async) {
       <mat-error class="service-error">
         {{ "Oops! That didn't work. Double-check your credentials and try again." }}
-      </mat-error>
-      }
+      </mat-error> 
+      }-->
     </div>
     <div class="btn-container">
       <button
         mat-raised-button
         type="button"
-        [disabled]="(loading$ | async) || !loginForm.valid"
+        [disabled]="!loginForm.valid"
         (click)="onSubmit()"
       >
         Login

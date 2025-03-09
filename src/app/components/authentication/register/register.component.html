@@ -14,6 +14,23 @@
 
       <div class="mat-container">
         <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Display Name</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="displayName"
+            placeholder="Your display name"
+            required
+          />
+          <mat-error *ngIf="onInputsValidation('displayName', 'required')">
+            {{ "Display Name is required" }}
+          </mat-error>
+          <mat-error *ngIf="onInputsValidation('displayName', 'minlength')">
+            {{ "Display Name should contain minimum 4 characters." }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
           <mat-label>Email</mat-label>
           <input
             matInput
@@ -58,7 +75,7 @@
           </mat-error>
           } @else if(onInputsValidation('password', 'minlength')) {
           <mat-error>
-            {{ "Password should contain minimum six characters" }}
+            {{ "Password should contain minimum 6 characters" }}
           </mat-error>
           }
         </mat-form-field>
@@ -68,7 +85,9 @@
           {{ 'An account with this email already exists. Sign in or register with a different email.' }}
         </mat-error>
         } -->
-        
+        <mat-error *ngIf="errorMessage" class="service-error">
+          {{ errorMessage }}
+        </mat-error>
       </div>
       <button
         mat-raised-button
