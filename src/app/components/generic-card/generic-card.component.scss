@@ -1,3 +1,11 @@
-.example-card {
+.card {
   max-width: 400px;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  border-radius: 0.375rem;
+  border: 1px solid rgba(134, 134, 135, 0.5);
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 }

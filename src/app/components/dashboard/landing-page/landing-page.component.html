@@ -1,12 +1,16 @@
 <app-layout-template>
   <app-banner (navigateToCourses)="onNavigateToAllCourses()"></app-banner>
 
-  <div *ngFor="let course of allCourses$ | async">
-    <app-generic-card
-      [courses]="[course]"
-      [id]="course.id"
-      (openCourse)="onCourseDetails($event)"
-    >
-    </app-generic-card>
+  <div class="courses-grid">
+    @for (course of allCourses$ | async; track course) {
+    <div class="courses-card">
+      <app-generic-card
+        [courses]="[course]"
+        [id]="course.id"
+        (openCourse)="onCourseDetails(course.id)"
+      >
+      </app-generic-card>
+    </div>
+    }
   </div>
 </app-layout-template>
