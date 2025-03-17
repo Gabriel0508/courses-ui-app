@@ -36,7 +36,7 @@ export class LandingPageComponent {
   }
 
   onCourseDetails(id: number) {
-    this.router.navigate(['/course', id]);
+    this.router.navigate(['/dashboard/course', id]);
   }
 
   initSubscriptions(): void {
