@@ -2,16 +2,12 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  TemplateRef,
+  OnInit,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import {
-  MatDialog,
-  MatDialogModule,
-  MatDialogRef,
-} from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Store, select } from '@ngrx/store';
-import { delay, Observable, take } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Course } from 'src/app/core/models/course.model';
 import { CourseApiActions } from 'src/app/state/item/item.actions';
 import {
@@ -31,6 +27,7 @@ import { CreateCourseComponent } from '../../modal/create-course-modal/create-co
   selector: 'app-courses',
   templateUrl: './courses.component.html',
   styleUrls: ['./courses.component.scss'],
+  standalone: true,
   imports: [
     CommonModule,
     MatTableModule,
@@ -42,17 +39,13 @@ import { CreateCourseComponent } from '../../modal/create-course-modal/create-co
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CoursesComponent {
+export class CoursesComponent implements OnInit {
   items$: Observable<Course[]> | undefined;
-  displayedColumns: string[] = [
-    'position',
-    'name',
-    'weight',
-    'symbol',
-    'action',
-  ]; //TODO: changes this
   isLoading$: Observable<boolean> | undefined;
-  dataSource = new MatTableDataSource<any>([]); //TODO:use a real type instead any
+  dataSource = new MatTableDataSource<Course>([]);
+
+  displayedColumns: string[] = ['id', 'name', 'description', 'owner', 'action'];
+
   readonly dialog = inject(MatDialog);
 
   constructor(
@@ -65,33 +58,6 @@ export class CoursesComponent {
     this.initSubscriptions();
   }
 
-  onDeleteItem(id: number): void {
-    this.store.dispatch(CourseApiActions.deleteCourse({ id }));
-
-    this.items$
-      ?.pipe(
-        take(1),
-        delay(5000) // Give it time to process
-      )
-      .subscribe((items) => {
-        console.log('Items after delete:', items);
-      });
-  }
-
-  onEditCourse() {
-    console.log('works');
-  }
-
-  openModal() {
-    this.dialog.open(CreateCourseComponent, {
-      disableClose: true,
-    });
-  }
-
-  onCourseDetails(id: number) {
-    this.router.navigate(['/course', id]);
-  }
-
   private initDispatch(): void {
     this.store.dispatch(CourseApiActions.getCourses());
   }
@@ -99,5 +65,28 @@ export class CoursesComponent {
   private initSubscriptions(): void {
     this.items$ = this.store.pipe(select(selectCoursesList));
     this.isLoading$ = this.store.pipe(select(selectCourseLoading));
+
+    this.items$.subscribe((courses) => {
+      this.dataSource.data = courses;
+    });
+  }
+
+  onDeleteItem(id: string): void {
+    this.store.dispatch(CourseApiActions.deleteCourse({ id }));
+  }
+
+  onEditCourse(item: Course): void {
+    console.log('Editing course:', item);
+    // Add modal or navigation logic here
+  }
+
+  openModal(): void {
+    this.dialog.open(CreateCourseComponent, {
+      disableClose: true,
+    });
+  }
+
+  onCourseDetails(id: number): void {
+    this.router.navigate(['/dashboard/course', id]);
   }
 }

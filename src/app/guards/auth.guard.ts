@@ -9,9 +9,7 @@ export const authGuard: CanActivateFn = () => {
 
   return auth.getAuthState().pipe(
     take(1),
-    map((isAuthenticated) => {
-      console.log('before map');
-      
+    map((isAuthenticated) => {      
       if (!isAuthenticated) {
         console.log('access denied');
         router.navigate(['/login']);

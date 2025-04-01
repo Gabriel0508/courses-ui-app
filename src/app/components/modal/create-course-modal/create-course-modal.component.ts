@@ -1,9 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -60,17 +56,14 @@ export class CreateCourseComponent {
   }
 
   addNewCourse(): void {
-    console.log('works');
     if (this.createItemForm.valid) {
       const courseData = this.createItemForm.value;
-      console.log('form value', courseData);
       this.store.dispatch(
         CourseApiActions.createCourse({
           course: courseData,
         })
       );
     }
-    console.log('course created');
     this.iniFormItem();
     this.onCloseModal();
   }
@@ -85,15 +78,13 @@ export class CreateCourseComponent {
     this.createItemForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
-      isEnabled: [true],
-      type: ['', Validators.required],
       owner: this.fb.group({
-        id: [1, Validators.required], //TODO: use generic id
+        id: [generatedId, Validators.required],
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
       }),
-      image: [''],
+      roles: this.fb.array([]),
     });
   }
 }

@@ -27,27 +27,6 @@
         </mat-error>
       </mat-form-field>
 
-      <!-- <div class="form-check mt-1 mb-3">
-        <input
-          class="form-check-input"
-          id="visibility"
-          type="checkbox"
-          formControlName="isEnabled"
-          checked
-        />
-        <label class="form-check-label text-dark-blue" for="visibility">
-          Enabled
-        </label>
-      </div> -->
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Course Type</mat-label>
-        <input matInput formControlName="type" placeholder="Type" required />
-        <mat-error *ngIf="onInputsValidation('type', 'required')">
-          {{ "Type is required" }}
-        </mat-error>
-      </mat-form-field>
-
       <div formGroupName="owner">
         <div class="">
           <h4>Owner</h4>

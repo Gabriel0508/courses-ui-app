@@ -13,9 +13,9 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [MatButtonModule, MatCardModule, CommonModule, MatIconModule],
 })
 export class GenericCardComponent {
-  @Input() courses!: Course[];
-  @Input() id: number | undefined;
-  @Output() openCourse = new EventEmitter<number>();
+  @Input() courses: Course[] | undefined;
+  @Input() id: string | undefined;
+  @Output() openCourse = new EventEmitter<string>();
 
   constructor() {}
 

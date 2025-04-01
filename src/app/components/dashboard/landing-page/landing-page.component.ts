@@ -35,13 +35,12 @@ export class LandingPageComponent {
     this.router.navigateByUrl('/dashboard/courses');
   }
 
-  onCourseDetails(id: number) {
+  onCourseDetails(id: string | undefined) {
     this.router.navigate(['/dashboard/course', id]);
   }
 
   initSubscriptions(): void {
-    (this.allCourses$ = this.store.pipe(select(selectCoursesList))),
-      tap((data) => console.log('selectCoursesList emitted:', data));
+    this.allCourses$ = this.store.pipe(select(selectCoursesList));
   }
 
   initDispatch(): void {

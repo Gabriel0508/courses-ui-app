@@ -18,7 +18,7 @@ export class CoursesDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      const id = Number(params.get('id'));
+      const id = String(params.get('id'));
 
       this.store.dispatch(CourseApiActions.getCourseId({ id }));
 
