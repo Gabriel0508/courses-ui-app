@@ -31,17 +31,16 @@ export class AuthService {
       createUserWithEmailAndPassword(this.auth, email, password)
     ).pipe(
       switchMap((userCredential: any) => {
-        // After successful registration, update the user's profile
         if (displayName) {
           return from(
             updateProfile(userCredential.user, {
-              displayName: displayName || null, // Use null if no display name is provided
+              displayName: displayName || null,
             })
           ).pipe(
-            map(() => userCredential) // Return the original userCredential
+            map(() => userCredential)
           );
         } else {
-          return of(userCredential); // If no profile info, just return the userCredential
+          return of(userCredential);
         }
       })
     );

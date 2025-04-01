@@ -24,16 +24,16 @@ export const CourseApiActions = createActionGroup({
       error: ApiError;
     }>(),
     'delete course': props<{
-      id: number;
+      id: string;
     }>(),
     'delete course success': props<{
-      id: number;
+      id: string;
     }>(),
     'delete course failure': props<{
       error: ApiError;
     }>(),
     'get course id': props<{
-      id: number | undefined;
+      id: string | undefined;
     }>(),
     'get course id success': props<{
       course: Course | undefined;

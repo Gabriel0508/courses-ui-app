@@ -1,15 +1,14 @@
 export interface Course {
-  id: number;
-  name: string;
-  description: string;
-  isEnabled: boolean;
-  type: string;
-  owner: {
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    roles: { name: string }[];
+  id?: string;     
+  name?: string;
+  description?: string;
+  owner?: {
+    email?: string;
+    firstName?: string;
+    lastName?: string;
+    id?: number;
   };
-  image: string;
+  roles?: Array<{
+    name?: string;
+  }>;
 }

@@ -26,15 +26,14 @@ import { AuthEffects } from './state/authentication/auth.effects';
 import { languageReducer } from './state/language/language.reducer';
 import { LanguageEffects } from './state/language/language.effects';
 import { environment } from 'src/environments/environments';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
-    // provideFirestore(() => getFirestore()),
-    // provideStorage(() => getStorage()),
-    // { provide: AngularFireStorage, useClass: AngularFireStorage },
+    provideFirestore(() => getFirestore()),
     provideStore({
       courses: courseReducer,
       auth: authReducer,
@@ -42,11 +41,6 @@ export const appConfig: ApplicationConfig = {
     }),
     provideEffects([CoursesEffects, AuthEffects, LanguageEffects]),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    // provideStoreDevtools({
-    //   maxAge: 25,
-    //   logOnly: !isDevMode(),
-    //   autoPause: true,
-    // }),
     provideHttpClient(withFetch()),
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimationsAsync(),
@@ -58,7 +52,7 @@ export const appConfig: ApplicationConfig = {
           deps: [HttpClient],
         },
         defaultLanguage: 'en',
-      })
+      }),
     ),
   ],
 };
