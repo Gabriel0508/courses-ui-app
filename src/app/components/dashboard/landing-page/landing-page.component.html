@@ -1,16 +1,20 @@
-<app-layout-template>
-  <app-banner (navigateToCourses)="onNavigateToAllCourses()"></app-banner>
-
-  <div class="courses-grid">
-    @for (course of allCourses$ | async; track course) {
-    <div class="courses-card">
-      <app-generic-card
-        [courses]="[course]"
-        [id]="course.id"
-        (openCourse)="onCourseDetails(course.id)"
-      >
-      </app-generic-card>
+@if (isLoading$ | async) {
+  <app-loading-spinner></app-loading-spinner>
+} @else {
+  <app-layout-template>
+    <app-banner (navigateToCourses)="onNavigateToAllCourses()"></app-banner>
+  
+    <div class="courses-grid">
+      @for (course of allCourses$ | async; track course) {
+      <div class="courses-card">
+        <app-generic-card
+          [courses]="[course]"
+          [id]="course.id"
+          (openCourse)="onCourseDetails(course.id)"
+        >
+        </app-generic-card>
+      </div>
+      }
     </div>
-    }
-  </div>
-</app-layout-template>
+  </app-layout-template>
+}
