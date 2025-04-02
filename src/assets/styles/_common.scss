@@ -1,10 +1,3 @@
-@import '../../../node_modules/bootstrap/scss/functions';
-@import '../../../node_modules/bootstrap/scss/variables';
-@import '../../../node_modules/bootstrap/scss/mixins';
-@import './mixins';
-@import './variables';
-@import './buttons';
-
 @font-face {
     font-family: Titillium-Web;
     src: url(../fonts/Titillium-Web/TitilliumWeb-Regular.ttf);
@@ -25,12 +18,12 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: $white;
+  background: #fff;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: transparent linear-gradient(45deg, #0097b9 0%, #8769ae 100%) 0 0
+  background: transparent linear-gradient(45deg,#ffd740 0%, #607d8b 100%) 0 0
   no-repeat padding-box;
   border-radius: 15px;
 }

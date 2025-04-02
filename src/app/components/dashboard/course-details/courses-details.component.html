@@ -1,0 +1,7 @@
+@if(course) {
+<div>
+  <h1>{{ course.name }}</h1>
+</div>
+} @else {
+<ng-template> <app-loading-spinner></app-loading-spinner>> </ng-template>
+}

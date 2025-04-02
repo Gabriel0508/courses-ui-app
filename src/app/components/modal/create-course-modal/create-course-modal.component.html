@@ -1,0 +1,87 @@
+<mat-dialog-content class="mat-typography">
+  <div class="">
+    <form [formGroup]="createItemForm" class="">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Course Name</mat-label>
+        <input
+          matInput
+          formControlName="name"
+          placeholder="Enter a course name"
+          required
+        />
+        <mat-error *ngIf="onInputsValidation('name', 'required')">
+          {{ "Name is required" }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Course Description</mat-label>
+        <textarea
+          matInput
+          formControlName="description"
+          placeholder="Enter a course description"
+          required
+        ></textarea>
+        <mat-error *ngIf="onInputsValidation('description', 'required')">
+          {{ "Description is required" }}
+        </mat-error>
+      </mat-form-field>
+
+      <div formGroupName="owner">
+        <div class="">
+          <h4>Owner</h4>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>First Name</mat-label>
+          <input
+            matInput
+            formControlName="firstName"
+            placeholder="First Name"
+            required
+          />
+          <mat-error *ngIf="onOwnerInputsValidation('firstName', 'required')">
+            {{ "First name is required" }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Last Name</mat-label>
+          <input
+            matInput
+            formControlName="lastName"
+            placeholder="Last Name"
+            required
+          />
+          <mat-error *ngIf="onOwnerInputsValidation('lastName', 'required')">
+            {{ "Last name is required" }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            formControlName="email"
+            placeholder="Email"
+            required
+          />
+          <mat-error *ngIf="onOwnerInputsValidation('email', 'required')">
+            {{ "Email is required" }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="addNewCourse()"
+    [disabled]="createItemForm.invalid"
+  >
+    Create Course
+  </button>
+</mat-dialog-actions>

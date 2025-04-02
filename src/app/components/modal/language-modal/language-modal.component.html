@@ -1,0 +1,21 @@
+<div class="modal-container">
+  <div mat-dialog-header class="dialog-header">
+    <h1 mat-dialog-title>Choose a language</h1>
+  
+    <button mat-icon-button (click)="onCloseDialog()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  
+  <mat-dialog-content class="modal-content">
+    <mat-list>
+      @for (languageCode of data.languages; track languageCode) {
+      <mat-list-item>
+        <div class="modal-item" (click)="onLanguageSelected(languageCode)">
+          {{ (languageMap$ | async)?.[languageCode] }}
+        </div>
+      </mat-list-item>
+      }
+    </mat-list>
+  </mat-dialog-content>
+</div>
