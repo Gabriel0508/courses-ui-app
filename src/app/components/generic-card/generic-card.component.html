@@ -1,18 +1,23 @@
 <mat-card class="card" appearance="outlined" (click)="onOpenCourse()">
   @for (course of courses; track course) {
+  <div class="img-container">
+    <img
+      mat-card-image
+      src="../../../assets/images/bg-image-r.webp"
+      alt="course-image"
+    />
+  </div>
   <mat-card-header>
-    <div mat-card-avatar class="eheader-image"></div>
     <mat-card-title>{{ course.name }}</mat-card-title>
-    <mat-card-subtitle>{{ course.description }}</mat-card-subtitle>
+    <mat-card-subtitle></mat-card-subtitle>
   </mat-card-header>
-  <img mat-card-image alt="course-image" />
   <mat-card-content>
     <p>
       {{ course.description }}
     </p>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-icon-button color="accent">
+    <button mat-icon-button color="warn">
       <mat-icon>favorite</mat-icon>
     </button>
     <button mat-button></button>
