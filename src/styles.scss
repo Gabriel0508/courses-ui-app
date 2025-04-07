@@ -1,5 +1,5 @@
-@use '@angular/material' as mat;
-@use './assets/styles/_common.scss';
+@use "@angular/material" as mat;
+@use "./assets/styles/_common.scss";
 
 @include mat.core();
 
@@ -7,12 +7,14 @@ $primary: mat.m2-define-palette(mat.$m2-blue-gray-palette);
 $accent: mat.m2-define-palette(mat.$m2-amber-palette, A200, A100, A400);
 $warn: mat.m2-define-palette(mat.$m2-red-palette);
 
-$theme: mat.m2-define-light-theme((
-  color: (
-    primary: $primary,
-    accent: $accent,
-    warn: $warn,
+$theme: mat.m2-define-light-theme(
+  (
+    color: (
+      primary: $primary,
+      accent: $accent,
+      warn: $warn,
+    ),
   )
-));
+);
 
 @include mat.all-component-themes($theme);

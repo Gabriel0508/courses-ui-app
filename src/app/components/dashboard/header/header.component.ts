@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
@@ -11,12 +16,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { select, Store } from '@ngrx/store';
 import { AuthActions } from 'src/app/state/authentication/auth.actions';
-import {
-  selectCurrentUser,
-  selectIsAuthenticated,
-  selectIsLoading,
-} from 'src/app/state/authentication/auth.selector';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { LanguageModalComponent } from '../../modal/language-modal/language-modal.component';
 import {
@@ -26,6 +26,8 @@ import {
 import { LanguageActions } from 'src/app/state/language/language.actions';
 import { User } from 'firebase/auth';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { MatError, MatInputModule, MatLabel } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-header',
@@ -42,6 +44,8 @@ import { AuthService } from 'src/app/core/services/auth.service';
     TranslateModule,
     MatDividerModule,
     MatListModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   standalone: true,
 })
@@ -57,20 +61,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private readonly store: Store,
     private readonly auth: AuthService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private readonly fb: FormBuilder
   ) {
     this.languageSubscription = this.store
       .pipe(select(selectCurrentLanguage))
       .subscribe((language) => {
         this.translate.use(language);
       });
-      this.user = this.auth.getUser();
+    this.user = this.auth.getUser();
   }
 
   ngOnInit(): void {
     this.authStateSubscription = this.auth.getAuthState().subscribe((user) => {
       this.user = user;
     });
+    this.initSearch();
   }
 
   ngOnDestroy(): void {
@@ -104,5 +110,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   onToggleProfileDrawer(drawer: MatDrawer) {
     this.isProfileDrawerOpen = !drawer.opened;
     drawer.toggle();
+  }
+
+  private initSearch() {
+    this.searchCourseForm = this.fb.group({
+      search: ['', Validators.required],
+    });
   }
 }

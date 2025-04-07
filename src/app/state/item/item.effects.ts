@@ -31,8 +31,8 @@ export class CoursesEffects {
   getCourseId$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CourseApiActions.getCourseId),
-      exhaustMap((action) =>
-        this.courseService.getCourseById(action.id).pipe(
+      switchMap(({ id }) =>
+        this.courseService.getCourseById(id).pipe(
           map(
             (course) => CourseApiActions.getCourseIdSuccess({ course }),
             catchError((error) =>

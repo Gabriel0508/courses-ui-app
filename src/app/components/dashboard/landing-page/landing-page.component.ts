@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { Observable, tap } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { Course } from 'src/app/core/models/course.model';
-import { selectCourseLoading, selectCoursesList } from 'src/app/state/item/item.selectors';
+import {
+  selectCourseLoading,
+  selectCoursesList,
+} from 'src/app/state/item/item.selectors';
 import { CourseApiActions } from 'src/app/state/item/item.actions';
 import { Router } from '@angular/router';
 import { BannerComponent } from 'src/app/components/dashboard/banner/banner.component';
@@ -10,6 +13,7 @@ import { CommonModule } from '@angular/common';
 import { LayoutTemplateComponent } from '../layout-template/layout-template.component';
 import { GenericCardComponent } from '../../generic-card/generic-card.component';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
+import { FooterComponent } from "../footer/footer.component";
 
 @Component({
   selector: 'app-landing-page',
@@ -20,14 +24,15 @@ import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.c
     BannerComponent,
     LayoutTemplateComponent,
     GenericCardComponent,
-    LoadingSpinnerComponent
-  ],
+    LoadingSpinnerComponent,
+    FooterComponent
+],
 })
 export class LandingPageComponent {
   allCourses$: Observable<Course[]> | undefined;
   isLoading$: Observable<boolean> | undefined;
-  
-  constructor(private readonly store: Store, private router: Router) {}
+
+  constructor(private store: Store, private router: Router) {}
 
   ngOnInit(): void {
     this.initDispatch();
@@ -35,7 +40,7 @@ export class LandingPageComponent {
   }
 
   onNavigateToAllCourses() {
-    this.router.navigateByUrl('/dashboard/courses');
+   this.router.navigateByUrl('/dashboard/courses');
   }
 
   onCourseDetails(id: string | undefined) {

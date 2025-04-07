@@ -7,6 +7,6 @@
     "resolveJsonModule": true,
     "esModuleInterop": true
   },
-  "files": ["src/main.ts"],
+  "files": ["src/main.ts","src/polyfills.ts"],
   "include": ["src/**/*.d.ts"]
 }

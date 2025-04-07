@@ -1,4 +1,32 @@
 .layout-container {
   height: calc(100vh - 64px);
-  margin: 0 16px;
+  padding: 0 32px;
+}
+
+/* Mobile (e.g., small devices) */
+@media (max-width: 599px) {
+  .layout-container {
+    padding: 0 8px;
+  }
+}
+
+/* Tablet */
+@media (min-width: 600px) and (max-width: 959px) {
+  .layout-container {
+    padding: 0 32px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 960px) and (max-width: 1919px) {
+  .layout-container {
+    padding: 0 64px;
+  }
+}
+
+/* Full HD and larger */
+@media (min-width: 1920px) {
+  .layout-container {
+    padding: 0 300px;
+  }
 }
