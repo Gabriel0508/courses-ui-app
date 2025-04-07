@@ -1,15 +1,4 @@
-@import "../../../assets/styles/variables";
-
 .footer {
-  background: transparent linear-gradient(45deg, #0097b9 0%, #8769ae 100%) 0 0
+  background: transparent linear-gradient(45deg, #607d8b 0%, #ffd740 100%) 0 0
     no-repeat padding-box;
-  .form-select {
-    cursor: pointer;
-    &:focus {
-      box-shadow: none !important;
-    }
-    option {
-      cursor: pointer;
-    }
-  }
 }

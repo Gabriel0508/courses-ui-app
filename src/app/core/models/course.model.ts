@@ -2,6 +2,11 @@ export interface Course {
   id?: string;     
   name?: string;
   description?: string;
+  category?: {
+   id?: number
+   name?: string
+   description?: string
+  }
   owner?: {
     email?: string;
     firstName?: string;
@@ -9,6 +14,7 @@ export interface Course {
     id?: number;
   };
   roles?: Array<{
-    name?: string;
+    admin?: string
+    editor?: string;
   }>;
 }

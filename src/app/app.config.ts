@@ -7,7 +7,6 @@ import {
 import {
   ApplicationConfig,
   importProvidersFrom,
-  isDevMode,
   provideZoneChangeDetection,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
@@ -26,18 +25,22 @@ import { AuthEffects } from './state/authentication/auth.effects';
 import { languageReducer } from './state/language/language.reducer';
 import { LanguageEffects } from './state/language/language.effects';
 import { environment } from 'src/environments/environments';
-import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { provideDatabase, getDatabase } from '@angular/fire/database';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+   // { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
     provideRouter(routes),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAuth(() => getAuth()),
+    //provideDatabase(() => getDatabase()),
     provideFirestore(() => getFirestore()),
+    provideAuth(() => getAuth()),
     provideStore({
       courses: courseReducer,
       auth: authReducer,
-      language: languageReducer,
+      language: languageReducer
     }),
     provideEffects([CoursesEffects, AuthEffects, LanguageEffects]),
     provideZoneChangeDetection({ eventCoalescing: true }),
@@ -52,7 +55,7 @@ export const appConfig: ApplicationConfig = {
           deps: [HttpClient],
         },
         defaultLanguage: 'en',
-      }),
+      })
     ),
   ],
 };

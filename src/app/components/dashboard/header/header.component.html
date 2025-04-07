@@ -6,42 +6,59 @@
     </button>
     <span>AUDEMY</span>
   </div> -->
-  <h3>AUDEMY</h3>
+  <div class="header-container">
+    <div class="logo">
+      <a class="logo-label" routerLink="/dashboard/home">audemy</a>
+    </div>
 
-  <div class="nav-buttons">
-    <button
-      routerLink="/dashboard/home"
-      mat-button
-      [disabled]="isProfileDrawerOpen"
-    >
-      {{ "header.home" | translate }}
-    </button>
-    <button
-      routerLink="/dashboard/courses"
-      mat-button
-      [disabled]="isProfileDrawerOpen"
-    >
-      {{ "header.courses" | translate }}
-    </button>
-    @if(user) {
-    <button mat-icon-button (click)="onToggleProfileDrawer(drawerProfile)">
-      @if(!drawerProfile.opened && user.photoURL){
-      <img
-        [src]="
-          user.photoURL
-            ? user.photoURL
-            : '../../../assets/images/logo-with-audemy-with-blue-color-upscaled.jpg'
-        "
-        alt="user profile"
-        class="user-image"
-      />
-      } @else if (!drawerProfile.opened && !user.photoURL) {
-      <mat-icon>account_circle</mat-icon>
-      } @else {
-      <mat-icon>close</mat-icon>
+    <!-- <form [formGroup]="searchCourseForm" class="search-form">
+      <mat-form-field appearance="outline">
+        <mat-label>Search</mat-label>
+        <input
+          matInput
+          type="search"
+          formControlName="search"
+          placeholder="What are you looking for?"
+        />
+        <mat-error> Error </mat-error>
+      </mat-form-field>
+    </form> -->
+
+    <div class="nav-buttons">
+      <button
+        routerLink="/dashboard/home"
+        mat-button
+        [disabled]="isProfileDrawerOpen"
+      >
+        {{ "header.home" | translate }}
+      </button>
+      <button
+        routerLink="/dashboard/courses"
+        mat-button
+        [disabled]="isProfileDrawerOpen"
+      >
+        {{ "header.courses" | translate }}
+      </button>
+      @if(user) {
+      <button mat-icon-button (click)="onToggleProfileDrawer(drawerProfile)">
+        @if(!drawerProfile.opened && user.photoURL){
+        <img
+          [src]="
+            user.photoURL
+              ? user.photoURL
+              : '../../../assets/images/logo-with-audemy-with-blue-color-upscaled.jpg'
+          "
+          alt="user profile"
+          class="user-image"
+        />
+        } @else if (!drawerProfile.opened && !user.photoURL) {
+        <mat-icon>account_circle</mat-icon>
+        } @else {
+        <mat-icon>close</mat-icon>
+        }
+      </button>
       }
-    </button>
-    }
+    </div>
   </div>
 </mat-toolbar>
 

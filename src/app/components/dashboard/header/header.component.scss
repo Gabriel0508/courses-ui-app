@@ -1,7 +1,15 @@
-mat-toolbar {
+.header-container {
   display: flex;
+  width: 100%;
   align-items: center;
   justify-content: space-between;
+  padding: 0 32px;
+  .logo {
+    .logo-label {
+      text-decoration: none;
+      color: #ffff;
+    }
+  }
   .menu {
     display: flex;
     align-items: center;
@@ -82,4 +90,33 @@ mat-toolbar {
 mat-divider {
   margin: 16px 0;
   background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Mobile (e.g., small devices) */
+@media (max-width: 599px) {
+  .header-container {
+    padding: 2px; //TODO: need to make it responsive
+    justify-content: none;
+  }
+}
+
+/* Tablet */
+@media (min-width: 600px) and (max-width: 959px) {
+  .header-container {
+    padding: 0 16px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 960px) and (max-width: 1919px) {
+  .header-container {
+    padding: 0 50px;
+  }
+}
+
+/* Full HD and larger */
+@media (min-width: 1920px) {
+  .header-container {
+    padding: 0 286px;
+  }
 }

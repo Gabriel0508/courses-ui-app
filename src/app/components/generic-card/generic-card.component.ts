@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { Course } from 'src/app/core/models/course.model';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -17,7 +24,31 @@ export class GenericCardComponent {
   @Input() id: string | undefined;
   @Output() openCourse = new EventEmitter<string>();
 
+  courseMock = {
+    previewUrl:
+      'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+    // Update with your video path
+  };
+  @ViewChild('previewVideo') previewVideo!: ElementRef<HTMLVideoElement>;
+
   constructor() {}
+
+  playPreview() {
+    if (!this.previewVideo) return;
+    const video = this.previewVideo.nativeElement;
+    video.play().catch((err) => {
+      if (err.name !== 'AbortError') {
+        console.error('Error playing video:', err);
+      }
+    });
+  }
+
+  pausePreview() {
+    if (!this.previewVideo) return;
+    const video = this.previewVideo.nativeElement;
+    video.pause();
+    video.currentTime = 0;
+  }
 
   onOpenCourse(): void {
     this.openCourse.emit(this.id);
