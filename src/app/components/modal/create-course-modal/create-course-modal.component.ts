@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  inject,
+  ViewChild,
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -13,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-modal',
@@ -25,12 +32,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    MatIconModule,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateCourseComponent {
   readonly dialog = inject(MatDialog);
   createItemForm: FormGroup = new FormGroup({});
+  fileName: string = '';
 
   constructor(
     private readonly validationsService: ValidationsService,
@@ -70,6 +79,18 @@ export class CreateCourseComponent {
 
   private onCloseModal(): void {
     this.dialog.closeAll();
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.fileName = file.name;
+
+      // Optional: handle the file (e.g., upload to server)
+      console.log('Selected file:', file);
+    }
   }
 
   private iniFormItem() {

@@ -1,1 +1,38 @@
-
+.banner-container {
+  margin: 16px 0;
+  height: 65vh;
+  .content {
+    background-image: url(../../../../assets/images/audemy-banner.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 0 16px;
+    .description {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      h3 {
+        margin-bottom: 16px;
+        color: #fff; //TODO: create global variables (use)
+      }
+      p {
+        color: #fff;
+      }
+    }
+    .description-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      h4 {
+        margin-bottom: 16px;
+        color: #fff;
+      }
+    }
+  }
+}

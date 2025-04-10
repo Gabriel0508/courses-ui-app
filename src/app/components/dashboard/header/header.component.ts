@@ -26,7 +26,7 @@ import {
 import { LanguageActions } from 'src/app/state/language/language.actions';
 import { User } from 'firebase/auth';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { MatError, MatInputModule, MatLabel } from '@angular/material/input';
+import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
@@ -45,7 +45,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatDividerModule,
     MatListModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
   ],
   standalone: true,
 })

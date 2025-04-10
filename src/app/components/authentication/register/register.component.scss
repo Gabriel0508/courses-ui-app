@@ -1,13 +1,17 @@
 .container {
   width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 100vh;
-  .bg-container {
-    background: url(../../../../assets/images/register-bg.webp) no-repeat;
-    background-position: center center;
-    background-size: cover;
-  }
+  height: 100vh; //TODO: find a better approach
+  // display: grid;
+  // grid-template-columns: 1fr 1fr;
+  // grid-template-rows: 100vh;
+  background: url(../../../../assets/images/audemy-banner.png) no-repeat;
+  background-position: center center;
+  background-size: cover;
+  // .bg-container {
+  //   background: url(../../../../assets/images/register-bg.webp) no-repeat;
+  //   background-position: center center;
+  //   background-size: cover;
+  // }
   .register-container {
     display: flex;
     flex-direction: column;
@@ -43,11 +47,10 @@
       margin: 16px;
       padding: 16px;
       border-radius: 0.375rem;
-      background-color: rgba(255, 255, 255, 0.4);
+      background-color: rgba(255, 254, 254, 0.7);
       box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(9px);
       -webkit-backdrop-filter: blur(1px);
-      border: 1px solid #3f51b5;
       .mat-container {
         width: 100%;
         display: flex;

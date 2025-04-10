@@ -1,14 +1,16 @@
 @if (isLoading$ | async) {
 <app-loading-spinner></app-loading-spinner>
 } @else if (course) {
-<div>
-  <h1>{{ course.name }}</h1>
-  <div class="course-meta">
-    <span>ID: {{ course.id }}</span>
+<app-layout-template>
+  <div>
+    <h1>{{ course.name }}</h1>
+    <div class="course-meta">
+      <span>ID: {{ course.id }}</span>
+    </div>
+    <h2>Description</h2>
+    <p>{{ course.description }}</p>
   </div>
-  <h2>Description</h2>
-  <p>{{ course.description }}</p>
-</div>
+</app-layout-template>
 } @else {
 <p>No course available.</p>
 }
