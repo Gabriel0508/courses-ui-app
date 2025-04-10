@@ -1,27 +1,36 @@
 <section class="footer">
-    <div class="">
-      <div>
-        <p>Info about Audemy</p>
-      </div>
-      <div>
-        <p>Help and Support</p>
-        <p>Informations</p>
-      </div>
-      <div>
-        <p>Data</p>
-        <p>Settings</p>
-        <p>News</p>
-      </div>
-      <div class="">
-        <select #selectedLang (change)="onSwitchLang(selectedLang.value)">
-          <option
-            *ngFor="let language of translate.getLangs()"
-            [value]="language"
-            [selected]="language === translate.currentLang"
-          >
-            {{ language }}
-          </option>
-        </select>
-      </div>
+  <div class="footer-container">
+    <div>
+      <h4>Audemy</h4>
+      <p>Info about Audemy</p>
     </div>
+    <div>
+      <h4>Community</h4>
+      <p>Help and Support</p>
+      <p>Informations</p>
+    </div>
+    <div>
+      <h4>More</h4>
+      <p>Data</p>
+      <p>Settings</p>
+      <p>News</p>
+    </div>
+    <div class="select-language">
+      <h4>Language</h4>
+      <mat-form-field appearance="fill">
+        <mat-label>Language</mat-label>
+        <mat-select
+          (selectionChange)="onSwitchLang($event.value)"
+          [value]="translate.currentLang"
+        >
+          <mat-option
+            *ngFor="let languageCode of (availableLanguages$ | async)"
+            [value]="languageCode"
+          >
+            {{ languageCode }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
 </section>

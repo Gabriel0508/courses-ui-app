@@ -1,24 +1,23 @@
-<div class="container">
+<div class="banner-container">
   <div class="content">
-    <div class="">
-      <div class="text">
-        <p class="text-light">
-          {{ "landing_page.banner.title" | translate }}
-        </p>
-      </div>
-
-      <div>
-        <button mat-raised-button (click)="onNavigateToCourses('')">
-          Get Started
-        </button>
-      </div>
-    </div>
-
-    <div>
-      <h2>New carrier with Certificate on Audemy!</h2>
+    <div class="description">
+      <h3>Build Skills That Matter — For a Future That Inspires!</h3>
       <p>
         {{ "landing_page.banner.description" | translate }}
       </p>
+    </div>
+    <div class="description-actions">
+      <h4>
+        {{ "landing_page.banner.title" | translate }}
+      </h4>
+
+      <button
+        mat-raised-button
+        color="accent"
+        (click)="onNavigateToCourses('')"
+      >
+        Get Started
+      </button>
     </div>
   </div>
 </div>

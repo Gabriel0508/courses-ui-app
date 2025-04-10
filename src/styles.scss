@@ -18,3 +18,22 @@ $theme: mat.m2-define-light-theme(
 );
 
 @include mat.all-component-themes($theme);
+
+// Define your palettes using Angular Material’s built-in palettes.
+// $primary: mat.m2-define-palette(mat.$m2-blue-gray-palette, 700);
+// $accent: mat.m2-define-palette(mat.$m2-teal-palette, 300);
+// $warn: mat.m2-define-palette(mat.$m2-red-palette); // Standard warn palette
+
+// // Create a light theme.
+// $theme: mat.m2-define-light-theme((
+//   color: (
+//     primary: $primary,
+//     accent: $accent,
+//     warn: $warn,
+//   ),
+//   typography: mat.m2-define-typography-config(), // Customize fonts if needed
+//   density: 0,
+// ));
+
+// // Include Angular Material component theming.
+// @include mat.all-component-themes($theme);

@@ -13,7 +13,6 @@ import { CommonModule } from '@angular/common';
 import { LayoutTemplateComponent } from '../layout-template/layout-template.component';
 import { GenericCardComponent } from '../../generic-card/generic-card.component';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
-import { FooterComponent } from "../footer/footer.component";
 
 @Component({
   selector: 'app-landing-page',
@@ -25,7 +24,7 @@ import { FooterComponent } from "../footer/footer.component";
     LayoutTemplateComponent,
     GenericCardComponent,
     LoadingSpinnerComponent,
-    FooterComponent
+    
 ],
 })
 export class LandingPageComponent {

@@ -1,4 +1,15 @@
 .footer {
   background: transparent linear-gradient(45deg, #607d8b 0%, #ffd740 100%) 0 0
     no-repeat padding-box;
+  .footer-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 16px;
+    h4 {
+      margin-bottom: 16px;
+    }
+  }
 }
