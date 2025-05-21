@@ -8,37 +8,23 @@
   </div> -->
   <div class="header-container">
     <a class="logo" routerLink="/dashboard/home">
-      <img src="./../../../../assets/images/A-Logo.png" alt="Logo" />
+      <h2>AIpath</h2>
     </a>
 
-    <!-- <form [formGroup]="searchCourseForm" class="search-form">
-      <mat-form-field appearance="outline">
-        <mat-label>Search</mat-label>
-        <input
-          matInput
-          type="search"
-          formControlName="search"
-          placeholder="What are you looking for?"
-        />
-        <mat-error> Error </mat-error>
-      </mat-form-field>
-    </form> -->
-
     <div class="nav-buttons">
-      <button
-        routerLink="/dashboard/home"
-        mat-button
-        [disabled]="isProfileDrawerOpen"
-      >
-        {{ "header.home" | translate }}
-      </button>
-      <button
-        routerLink="/dashboard/courses"
-        mat-button
-        [disabled]="isProfileDrawerOpen"
-      >
-        {{ "header.courses" | translate }}
-      </button>
+      <form [formGroup]="searchCourseForm" class="search-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Search</mat-label>
+          <input
+            matInput
+            type="search"
+            formControlName="search"
+            placeholder="What are you looking for?"
+          />
+          <mat-error> Error </mat-error>
+        </mat-form-field>
+      </form>
+
       @if(user) {
       <button mat-icon-button (click)="onToggleProfileDrawer(drawerProfile)">
         @if(!drawerProfile.opened && user.photoURL){
@@ -46,7 +32,8 @@
           [src]="
             user.photoURL
               ? user.photoURL
-              : './../../../../assets/images/A-Logo.png/'"
+              : './../../../../assets/images/A-Logo.png/'
+          "
           alt="user profile"
           class="user-image"
         />
@@ -101,11 +88,7 @@
     >
       <img
         class="user-avatar mat-elevation-z8"
-        [src]="
-          user.photoURL
-            ? user.photoURL
-            : '../../../assets/images/logo-with-audemy-with-blue-color-upscaled.jpg'
-        "
+        [src]="user.photoURL ? user.photoURL : ''"
         alt="user-profile"
       />
       <div class="user-details">
@@ -145,6 +128,11 @@
     >
       <mat-icon>notifications</mat-icon>
       <span>Notifications</span>
+      <!-- <mat-badge
+        [hidden]="!notificationMessage"
+        matBadge="!"
+        matBadgeColor="warn"
+      ></mat-badge> -->
     </button>
 
     <button

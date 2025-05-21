@@ -2,10 +2,26 @@
 <app-loading-spinner></app-loading-spinner>
 } @else {
 <app-layout-template>
-  <app-banner (navigateToCourses)="onNavigateToAllCourses()"></app-banner>
+  <app-banner
+    [imgSrc]="'../../../../assets/images/human-wave.png'"
+    [title]="'Hello ' + user?.displayName + '!'"
+    [description]="`It's good to see you.`"
+  >
+  </app-banner>
 
+  <div class="courses-name">
+    <h2>Courses</h2>
+  </div>
+  <app-courses-header
+    [activeTab]="activeTab$.value"
+    (tabChange)="onTabChange($event)"
+  >
+  </app-courses-header>
+  @if (isLoading$ | async) {
+  <app-loading-spinner></app-loading-spinner>
+  } @else {
   <div class="courses-grid">
-    @for (course of allCourses$ | async; track course) {
+    @for (course of displayCourses$ | async; track course) {
     <div class="courses-card">
       <app-generic-card
         [courses]="[course]"
@@ -16,5 +32,16 @@
     </div>
     }
   </div>
+  @if (hasMore$ | async) {
+  <div class="more-courses">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onNavigateToAllCourses()"
+    >
+      View More
+    </button>
+  </div>
+  } }
 </app-layout-template>
 }

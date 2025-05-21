@@ -10,6 +10,7 @@ import {
   addDoc,
   updateDoc,
   deleteDoc,
+  serverTimestamp,
 } from '@angular/fire/firestore';
 import cloneDeep from 'lodash-es/cloneDeep';
 
@@ -35,15 +36,19 @@ export class CourseService {
     ).pipe(map((course) => (course ? cloneDeep(course) : undefined)));
   }
 
-  createCourse(course: Course): Observable<any> {
+  createCourse(course: Course): Observable<Course> {
     const coursesRef = collection(this.firestore, this.collectionName);
-    const clonedCourse = cloneDeep(course);
-
-    return from(addDoc(coursesRef, clonedCourse)).pipe(
-      map((docRef) => ({
-        id: docRef.id,
-        ...clonedCourse,
-      }))
+    const payload = {
+      ...course,
+      createdAt: serverTimestamp(),
+    };
+    return from(addDoc(coursesRef, payload)).pipe(
+      map((docRef) => {
+        return {
+          id: docRef.id,
+          ...payload,
+        } as Course;
+      })
     );
   }
 

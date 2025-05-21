@@ -1,6 +1,11 @@
-import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  Output,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { LayoutTemplateComponent } from '../layout-template/layout-template.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { select, Store } from '@ngrx/store';
@@ -14,6 +19,10 @@ import { selectCurrentLanguage } from 'src/app/state/language/language.selector'
   imports: [MatButtonModule, TranslateModule],
 })
 export class BannerComponent implements OnDestroy {
+  @Input() imgSrc: string | undefined;
+  @Input() title: string | undefined;
+  @Input() description: string | undefined;
+  @Input() buttonLabel: string | undefined;
   @Output() navigateToCourses = new EventEmitter<string>();
   languageSubscription: Subscription;
 
@@ -29,7 +38,7 @@ export class BannerComponent implements OnDestroy {
   }
 
   onNavigateToCourses(url: string): void {
-    this.navigateToCourses.emit(url);
+    this.navigateToCourses?.emit(url);
   }
 
   ngOnDestroy(): void {

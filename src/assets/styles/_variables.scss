@@ -1,0 +1,82 @@
+@use "sass:color" as *;
+
+$grey-dark: #212121;
+$grey-light: #f2f2f2;
+$grey-medium: #bdbdbd;
+$gold: #c8a165;
+$beige: #e8dcc3;
+
+$grey-palette: (
+  50: scale($grey-dark, $lightness: 90%),
+  100: scale($grey-dark, $lightness: 80%),
+  200: scale($grey-dark, $lightness: 60%),
+  300: scale($grey-dark, $lightness: 40%),
+  400: scale($grey-dark, $lightness: 20%),
+  500: $grey-dark,
+  600: scale($grey-dark, $lightness: -10%),
+  700: scale($grey-dark, $lightness: -20%),
+  800: scale($grey-dark, $lightness: -30%),
+  900: scale($grey-dark, $lightness: -40%),
+  contrast: (
+    50: #000,
+    100: #000,
+    200: #000,
+    300: #000,
+    400: #000,
+    500: #fff,
+    600: #fff,
+    700: #fff,
+    800: #fff,
+    900: #fff,
+  ),
+);
+
+$gold-palette: (
+  50: scale($gold, $lightness: 80%),
+  100: scale($gold, $lightness: 60%),
+  200: scale($gold, $lightness: 40%),
+  300: scale($gold, $lightness: 20%),
+  400: scale($gold, $lightness: 10%),
+  500: $gold,
+  600: scale($gold, $lightness: -10%),
+  700: scale($gold, $lightness: -20%),
+  800: scale($gold, $lightness: -30%),
+  900: scale($gold, $lightness: -40%),
+  contrast: (
+    50: #000,
+    100: #000,
+    200: #000,
+    300: #000,
+    400: #000,
+    500: #fff,
+    600: #fff,
+    700: #fff,
+    800: #fff,
+    900: #fff,
+  ),
+);
+
+$beige-palette: (
+  50: scale($beige, $lightness: 80%),
+  100: scale($beige, $lightness: 60%),
+  200: scale($beige, $lightness: 40%),
+  300: scale($beige, $lightness: 20%),
+  400: scale($beige, $lightness: 10%),
+  500: $beige,
+  600: scale($beige, $lightness: -10%),
+  700: scale($beige, $lightness: -20%),
+  800: scale($beige, $lightness: -30%),
+  900: scale($beige, $lightness: -40%),
+  contrast: (
+    50: #000,
+    100: #000,
+    200: #000,
+    300: #000,
+    400: #000,
+    500: #000,
+    600: #000,
+    700: #000,
+    800: #000,
+    900: #000,
+  ),
+);

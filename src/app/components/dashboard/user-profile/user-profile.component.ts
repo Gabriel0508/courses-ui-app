@@ -15,6 +15,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { LayoutTemplateComponent } from '../layout-template/layout-template.component';
 import { ValidationsService } from 'src/app/core/services/validations.service';
+import { UploadComponent } from "../../upload/upload.component";
 
 @Component({
   selector: 'app-user-profile',
@@ -27,7 +28,8 @@ import { ValidationsService } from 'src/app/core/services/validations.service';
     MatInputModule,
     MatButtonModule,
     LayoutTemplateComponent,
-  ],
+    UploadComponent
+],
   standalone: true,
 })
 export class UserProfileComponent {

@@ -28,7 +28,9 @@
           </mat-error>
         </mat-form-field>
 
-        <input type="file" (change)="onFileSelected($event)" />
+        <div>
+          <app-upload></app-upload>
+        </div>
 
         <button
           mat-raised-button

@@ -1,39 +1,35 @@
 @use "@angular/material" as mat;
 @use "./assets/styles/_common.scss";
-
+@use "./assets/styles/variables" as colors;
 @include mat.core();
 
-$primary: mat.m2-define-palette(mat.$m2-blue-gray-palette);
-$accent: mat.m2-define-palette(mat.$m2-amber-palette, A200, A100, A400);
-$warn: mat.m2-define-palette(mat.$m2-red-palette);
+//$primary-palette: mat.m2-define-palette(mat.$m2-grey-palette, 800);
+$primary-palette: mat.m2-define-palette(colors.$grey-palette);
+$accent-palette : mat.m2-define-palette(colors.$gold-palette);
+$warn-palette: mat.m2-define-palette(mat.$m2-red-palette);
 
 $theme: mat.m2-define-light-theme(
   (
     color: (
-      primary: $primary,
-      accent: $accent,
-      warn: $warn,
+      primary: $primary-palette,
+      accent: $accent-palette,
+      warn: $warn-palette,
     ),
   )
 );
 
 @include mat.all-component-themes($theme);
 
-// Define your palettes using Angular Material’s built-in palettes.
-// $primary: mat.m2-define-palette(mat.$m2-blue-gray-palette, 700);
-// $accent: mat.m2-define-palette(mat.$m2-teal-palette, 300);
-// $warn: mat.m2-define-palette(mat.$m2-red-palette); // Standard warn palette
-
-// // Create a light theme.
-// $theme: mat.m2-define-light-theme((
-//   color: (
-//     primary: $primary,
-//     accent: $accent,
-//     warn: $warn,
-//   ),
-//   typography: mat.m2-define-typography-config(), // Customize fonts if needed
-//   density: 0,
-// ));
-
-// // Include Angular Material component theming.
-// @include mat.all-component-themes($theme);
+//Snack
+.success-snackbar .mat-mdc-snackbar-surface {
+  background-color: #4caf50 !important;
+  color: white !important;
+}
+.warn-snackbar .mat-mdc-snackbar-surface {
+  background-color: #ff9800 !important;
+  color: white !important;
+}
+.error-snackbar .mat-mdc-snackbar-surface {
+  background-color: #f44336 !important;
+  color: white !important;
+}

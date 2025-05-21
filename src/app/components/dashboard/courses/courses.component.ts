@@ -22,6 +22,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { AppState } from 'src/app/core/models/appState.model';
 import { LayoutTemplateComponent } from '../layout-template/layout-template.component';
 import { CreateCourseComponent } from '../../modal/create-course-modal/create-course-modal.component';
+import { ConfirmationModalComponent } from '../../modal/confirmation-modal/confirmation-modal.component';
+import { showNotificationActions } from 'src/app/state/notification/notification.actions';
+import { BannerComponent } from '../banner/banner.component';
 
 @Component({
   selector: 'app-courses',
@@ -36,6 +39,7 @@ import { CreateCourseComponent } from '../../modal/create-course-modal/create-co
     MatIconModule,
     LayoutTemplateComponent,
     MatDialogModule,
+    BannerComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -72,7 +76,26 @@ export class CoursesComponent implements OnInit {
   }
 
   onDeleteItem(id: string): void {
-    this.store.dispatch(CourseApiActions.deleteCourse({ id }));
+    const dialogRef = this.dialog.open(ConfirmationModalComponent, {
+      data: {
+        title: 'Delete Course',
+        message: 'Are you sure you want to delete this course?',
+      },
+      disableClose: true,
+      autoFocus: false,
+      restoreFocus: false,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === true) {
+        this.store.dispatch(CourseApiActions.deleteCourse({ id }));
+        this.store.dispatch(
+          showNotificationActions.showNotification({
+            message: `The course was deleted successfully`,
+            notificationType: 'success',
+          })
+        );
+      }
+    });
   }
 
   onEditCourse(item: Course): void {
@@ -83,6 +106,8 @@ export class CoursesComponent implements OnInit {
   openModal(): void {
     this.dialog.open(CreateCourseComponent, {
       disableClose: true,
+      autoFocus: false,
+      restoreFocus: false,
     });
   }
 
@@ -90,3 +115,4 @@ export class CoursesComponent implements OnInit {
     this.router.navigate(['/dashboard/course', id]);
   }
 }
+

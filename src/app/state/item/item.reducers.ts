@@ -6,6 +6,7 @@ export interface CourseState {
   courses: Course[];
   selectedCourse: Course | undefined;
   error: any;
+  message: string | null;
   loading: boolean;
 }
 
@@ -13,6 +14,7 @@ export const initialState: CourseState = {
   courses: [],
   selectedCourse: undefined,
   error: null,
+  message: null,
   loading: false,
 };
 
@@ -39,6 +41,7 @@ export const courseReducer = createReducer(
   on(CourseApiActions.createCourseSuccess, (state, { course }) => ({
     ...state,
     courses: [...state.courses, course],
+    message: `Course "${course.name}" was created successfully.`,
     loading: false,
   })),
   on(CourseApiActions.createCourseFailure, (state, { error }) => ({

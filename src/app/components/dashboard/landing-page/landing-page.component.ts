@@ -1,6 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  map,
+  Observable,
+  Subscription,
+} from 'rxjs';
 import { Course } from 'src/app/core/models/course.model';
 import {
   selectCourseLoading,
@@ -13,6 +19,13 @@ import { CommonModule } from '@angular/common';
 import { LayoutTemplateComponent } from '../layout-template/layout-template.component';
 import { GenericCardComponent } from '../../generic-card/generic-card.component';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
+import { User } from 'firebase/auth';
+import { AuthService } from 'src/app/core/services/auth.service';
+import {
+  CoursesHeaderComponent,
+  Tab,
+} from '../../courses-header/courses-header.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-landing-page',
@@ -24,22 +37,68 @@ import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.c
     LayoutTemplateComponent,
     GenericCardComponent,
     LoadingSpinnerComponent,
-    
-],
+    CoursesHeaderComponent,
+    MatButtonModule,
+  ],
 })
-export class LandingPageComponent {
-  allCourses$: Observable<Course[]> | undefined;
-  isLoading$: Observable<boolean> | undefined;
+export class LandingPageComponent implements OnInit {
+  allCourses$!: Observable<Course[]>;
+  isLoading$!: Observable<boolean>;
+  user: User | null = null;
+  filteredCourses$!: Observable<Course[]>;
 
-  constructor(private store: Store, private router: Router) {}
+  activeTab$ = new BehaviorSubject<Tab>('all');
+  private authStateSubscription?: Subscription;
+  displayCourses$!: Observable<Course[]>;
+  hasMore$!: Observable<boolean>;
+
+  constructor(
+    private store: Store,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.initDispatch();
     this.initSubscriptions();
+
+    this.filteredCourses$ = combineLatest([
+      this.allCourses$,
+      this.activeTab$,
+    ]).pipe(
+      map(([courses, tab]) => {
+        switch (tab) {
+          case 'newest':
+            return [...courses].sort(
+              (a, b) =>
+                (b.createdAt?.toMillis() ?? 0) - (a.createdAt?.toMillis() ?? 0)
+            );
+          // case 'popular':
+          //   return courses.filter((c) => c.enrollments > 1000); //TODO: after the user roles are set
+          case 'all':
+          default:
+            return courses;
+        }
+      })
+    );
+
+    this.displayCourses$ = this.filteredCourses$.pipe(
+      map((courses) => courses.slice(0, 8))
+    );
+
+    this.hasMore$ = this.filteredCourses$.pipe(
+      map((courses) => courses.length > 8)
+    );
+
+    this.authStateSubscription = this.authService
+      .getAuthState()
+      .subscribe((user) => {
+        this.user = user;
+      });
   }
 
   onNavigateToAllCourses() {
-   this.router.navigateByUrl('/dashboard/courses');
+    this.router.navigateByUrl('/dashboard/courses');
   }
 
   onCourseDetails(id: string | undefined) {
@@ -53,5 +112,13 @@ export class LandingPageComponent {
 
   initDispatch(): void {
     this.store.dispatch(CourseApiActions.getCourses());
+  }
+
+  onTabChange(tab: Tab): void {
+    this.activeTab$.next(tab);
+  }
+
+  trackByCourse(_: number, course: Course): string {
+    return course.id!;
   }
 }

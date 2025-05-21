@@ -1,0 +1,11 @@
+.modal-container {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+
+  mat-dialog-actions {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+}

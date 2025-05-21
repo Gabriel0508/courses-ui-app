@@ -28,6 +28,8 @@ import { User } from 'firebase/auth';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ConfirmationModalComponent } from '../../modal/confirmation-modal/confirmation-modal.component';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @Component({
   selector: 'app-header',
@@ -46,6 +48,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatListModule,
     MatFormFieldModule,
     MatInputModule,
+    MatBadgeModule,
   ],
   standalone: true,
 })
@@ -91,6 +94,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       const dialogRef = this.dialog.open(LanguageModalComponent, {
         data: { languages: languages },
         disableClose: true,
+        autoFocus: false,
+        restoreFocus: false,
       });
 
       dialogRef.afterClosed().subscribe((selectedLanguage: string) => {
@@ -104,7 +109,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onLogout() {
-    this.store.dispatch(AuthActions.logout());
+    const dialogRef = this.dialog.open(ConfirmationModalComponent, {
+      data: {
+        title: 'Log out',
+        message: 'Are you sure you want to log out?',
+      },
+      disableClose: true,
+      autoFocus: false,
+      restoreFocus: false,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === true) {
+        this.store.dispatch(AuthActions.logout());
+      }
+    });
   }
 
   onToggleProfileDrawer(drawer: MatDrawer) {
@@ -114,7 +132,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private initSearch() {
     this.searchCourseForm = this.fb.group({
-      search: ['', Validators.required],
+      search: [''],
     });
   }
 }
