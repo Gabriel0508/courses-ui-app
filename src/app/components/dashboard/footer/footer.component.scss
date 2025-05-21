@@ -1,5 +1,8 @@
+@use "../../../../assets/styles/variables" as colors;
+
 .footer {
-  background: transparent linear-gradient(45deg, #607d8b 0%, #ffd740 100%) 0 0
+  background: transparent
+    linear-gradient(45deg, colors.$grey-dark 0%, colors.$grey-light 100%) 0 0
     no-repeat padding-box;
   .footer-container {
     width: 100%;

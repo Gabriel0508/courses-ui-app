@@ -1,23 +1,24 @@
 <div class="banner-container">
-  <div class="content">
+  <div class="banner-content">
     <div class="description">
-      <h3>Build Skills That Matter — For a Future That Inspires!</h3>
+      <h2>{{ title }}</h2>
       <p>
-        {{ "landing_page.banner.description" | translate }}
+        {{ description }}
       </p>
     </div>
     <div class="description-actions">
-      <h4>
-        {{ "landing_page.banner.title" | translate }}
-      </h4>
-
+      @if (buttonLabel) {
       <button
         mat-raised-button
         color="accent"
         (click)="onNavigateToCourses('')"
       >
-        Get Started
+        {{ buttonLabel }}
       </button>
+      }
     </div>
+  </div>
+  <div class="banner-character">
+    <img [src]="imgSrc" alt="Banner background" />
   </div>
 </div>

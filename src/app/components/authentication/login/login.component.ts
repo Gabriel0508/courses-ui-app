@@ -20,6 +20,7 @@ import {
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { ValidationsService } from 'src/app/core/services/validations.service';
+import { showNotificationActions } from 'src/app/state/notification/notification.actions';
 
 @Component({
   selector: 'app-login',
@@ -39,7 +40,7 @@ import { ValidationsService } from 'src/app/core/services/validations.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup = new FormGroup({});
   //loading$: Observable<boolean>;
- // error$: Observable<string | null>;
+  // error$: Observable<string | null>;
   hidePassword = true;
 
   constructor(
@@ -63,6 +64,13 @@ export class LoginComponent implements OnInit {
       .login(email, password)
       .subscribe(() => this.router.navigate(['/dashboard']));
     //this.store.dispatch(AuthActions.login({ email, password }));
+
+    this.store.dispatch(
+      showNotificationActions.showNotification({
+        message: `Error`,
+        notificationType: 'error',
+      })
+    );
   }
 
   loginWithGoogle() {

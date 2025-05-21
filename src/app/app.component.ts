@@ -9,5 +9,7 @@ import { RouterModule } from '@angular/router';
   imports: [RouterModule],
 })
 export class AppComponent {
+  notificationMessage: string | null = null;
+  notificationType: string | null = null;
   constructor() {}
 }

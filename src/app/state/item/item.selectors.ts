@@ -24,3 +24,8 @@ export const selectSelectedCourseId = createSelector(
   selectCourseState,
   (state: CourseState) => state.selectedCourse
 );
+
+export const selectNotificationMessage = createSelector(
+  selectCourseState,
+  (state: CourseState) => state.message
+);

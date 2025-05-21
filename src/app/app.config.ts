@@ -28,10 +28,12 @@ import { environment } from 'src/environments/environments';
 import { provideDatabase, getDatabase } from '@angular/fire/database';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { notificationReducer } from './state/notification/notification.reducers';
+import { NotificationEffects } from './state/notification/notification.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-   // { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
+    // { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
     provideRouter(routes),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     //provideDatabase(() => getDatabase()),
@@ -40,9 +42,15 @@ export const appConfig: ApplicationConfig = {
     provideStore({
       courses: courseReducer,
       auth: authReducer,
-      language: languageReducer
+      language: languageReducer,
+      notification: notificationReducer,
     }),
-    provideEffects([CoursesEffects, AuthEffects, LanguageEffects]),
+    provideEffects([
+      CoursesEffects,
+      AuthEffects,
+      LanguageEffects,
+      NotificationEffects,
+    ]),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(withFetch()),
     provideHttpClient(withInterceptorsFromDi()),

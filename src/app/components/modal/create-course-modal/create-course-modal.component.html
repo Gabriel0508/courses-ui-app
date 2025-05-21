@@ -1,6 +1,9 @@
 <mat-dialog-content class="mat-typography">
   <div class="create-course-container">
     <form [formGroup]="createItemForm" class="create-course-form">
+      <div>
+        <h4>Course</h4>
+      </div>
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Course Name</mat-label>
         <input
@@ -26,6 +29,8 @@
           {{ "Description is required" }}
         </mat-error>
       </mat-form-field>
+
+      <app-upload></app-upload>
 
       <div formGroupName="owner">
         <div class="">
@@ -70,23 +75,6 @@
             {{ "Email is required" }}
           </mat-error>
         </mat-form-field>
-      </div>
-
-      <!--TODO: create upload component-->
-      <div class="file-upload"> 
-        <input
-          type="file"
-          #fileInput
-          (change)="onFileSelected($event)"
-          hidden
-        />
-
-        <button mat-raised-button color="primary" (click)="fileInput.click()">
-          <mat-icon>upload</mat-icon>
-          Upload File
-        </button>
-
-        <div *ngIf="fileName" class="file-name">Selected: {{ fileName }}</div>
       </div>
     </form>
   </div>

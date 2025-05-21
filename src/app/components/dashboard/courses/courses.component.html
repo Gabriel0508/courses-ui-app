@@ -1,4 +1,10 @@
 <app-layout-template>
+  <app-banner
+    [imgSrc]="'../../../../assets/images/human-pointing.png'"
+    [title]="'Hello !'"
+    [description]="'Start here'"
+  >
+  </app-banner>
   <div class="container my-3">
     <p>Click here to create a new Course</p>
     <button mat-raised-button color="accent" (click)="openModal()">

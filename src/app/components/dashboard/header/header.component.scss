@@ -1,3 +1,5 @@
+@use "../../../../assets/styles/variables" as colors;
+
 .header-container {
   display: flex;
   width: 100%;
@@ -6,10 +8,9 @@
   .logo {
     display: flex;
     width: 100px;
-    img {
-      width: 100%;
-      object-fit: cover;
-      object-position: center;
+    text-decoration: none;
+    h2 {
+      color: white;
     }
   }
   .menu {
@@ -42,8 +43,8 @@
 
 .profile {
   margin: 5px 16px 5px 0;
-  width: 250px;
-  background: #607d8b;
+  width: 300px;
+  background: colors.$grey-dark;
   border-radius: 10px;
   padding: 16px;
   text-align: center;

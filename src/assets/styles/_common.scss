@@ -1,6 +1,7 @@
+@use "../styles/variables" as colors;
 @font-face {
-    font-family: Titillium-Web;
-    src: url(../fonts/Titillium-Web/TitilliumWeb-Regular.ttf);
+  font-family: Titillium-Web;
+  src: url(../fonts/Titillium-Web/TitilliumWeb-Regular.ttf);
 }
 
 * {
@@ -23,7 +24,8 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: transparent linear-gradient(45deg,#ffd740 0%, #607d8b 100%) 0 0
-  no-repeat padding-box;
+  background: transparent
+    linear-gradient(45deg, colors.$grey-light 0%, colors.$grey-dark 100%) 0 0
+    no-repeat padding-box;
   border-radius: 15px;
 }

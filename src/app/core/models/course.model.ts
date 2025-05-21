@@ -1,12 +1,14 @@
+import type { Timestamp as FirestoreTimestamp } from 'firebase/firestore';
+
 export interface Course {
-  id?: string;     
+  id?: string;
   name?: string;
   description?: string;
   category?: {
-   id?: number
-   name?: string
-   description?: string
-  }
+    id?: number;
+    name?: string;
+    description?: string;
+  };
   owner?: {
     email?: string;
     firstName?: string;
@@ -14,7 +16,8 @@ export interface Course {
     id?: number;
   };
   roles?: Array<{
-    admin?: string
+    admin?: string;
     editor?: string;
   }>;
+  createdAt?: FirestoreTimestamp;
 }

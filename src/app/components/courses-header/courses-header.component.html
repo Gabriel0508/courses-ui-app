@@ -1,0 +1,14 @@
+<nav mat-tab-nav-bar class="courses-nav" [tabPanel]="panel">
+  @for(tab of tabs; track tab) {
+  <a
+  class="courses-tab"
+    mat-tab-link
+    [active]="tab.value === activeTab"
+    (click)="onSelectTab(tab.value)"
+  >
+    {{ tab.label }}
+  </a>
+  }
+</nav>
+
+<mat-tab-nav-panel #panel></mat-tab-nav-panel>

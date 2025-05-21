@@ -1,0 +1,58 @@
+<mat-card
+  class="upload-modal"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave($event)"
+  (drop)="onDrop($event)"
+  [class.drag-hover]="isHovering"
+>
+  <mat-card-content>
+    <div class="upload-content">
+      <mat-card *ngIf="uploadedFile" class="file-tile">
+        <div class="file-name">
+          <mat-card-title>{{ uploadedFile.name }}</mat-card-title>
+          <mat-card-subtitle
+            >{{
+              uploadedFile.size / 1000 | number : "1.0-2"
+            }}
+            KB</mat-card-subtitle
+          >
+        </div>
+        <div class="file-action">
+          <button
+            mat-icon-button
+            (click)="downloadFile(); $event.preventDefault()"
+            aria-label="Download file"
+            matTooltip="Download file"
+          >
+            <mat-icon>download</mat-icon>
+          </button>
+
+          <button
+            mat-icon-button
+            color="warn"
+            (click)="deleteFile(); $event.preventDefault()"
+            aria-label="Delete file"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </mat-card>
+
+      <input type="file" #fileInput hidden (change)="onFileSelected($event)" />
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="fileInput.click(); $event.preventDefault()"
+      >
+        <mat-icon>upload</mat-icon> Choose File...
+      </button>
+
+      <div *ngIf="uploadProgress !== null">
+        <mat-progress-bar
+          mode="determinate"
+          [value]="uploadProgress"
+        ></mat-progress-bar>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
