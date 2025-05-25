@@ -24,7 +24,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import {
   CoursesHeaderComponent,
   Tab,
-} from '../../courses-header/courses-header.component';
+} from '../courses-header/courses-header.component';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
