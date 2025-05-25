@@ -2,14 +2,100 @@
 <app-loading-spinner></app-loading-spinner>
 } @else if (course) {
 <app-layout-template>
-  <div>
+   <mat-card class="course-card">
+    <mat-card-header>
+      <div mat-card-avatar class="course-icon">
+        <mat-icon>book</mat-icon>
+      </div>
+      <mat-card-title>{{ course.name }}</mat-card-title>
+      <mat-card-subtitle>
+        Created on {{ course.createdAt?.toDate() | date:'longDate' }}
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content>
+      <section class="section">
+        <h3>Description</h3>
+        <p>{{ course.description }}</p>
+      </section>
+
+      <section class="section">
+        <h3>Instructor</h3>
+        <div class="owner-info">
+          <mat-icon>person</mat-icon>
+          <span>{{ course.owner?.firstName }} {{ course.owner?.lastName }}</span>
+        </div>
+        <div class="owner-info">
+          <mat-icon>email</mat-icon>
+          <span>{{ course.owner?.email }}</span>
+        </div>
+      </section>
+       <section class="section" *ngIf="course.fileURL">
+        <h3>Attachment</h3>
+
+        <ng-container *ngIf="isPdf(course.fileURL); else docLink">
+          <mat-card class="attachment-card">
+            <iframe
+              [src]="course.fileURL | safeResourceUrl"
+              class="attachment-frame"
+              frameborder="0">
+            </iframe>
+          </mat-card>
+        </ng-container>
+
+        <ng-template #docLink>
+          <a mat-stroked-button color="primary"
+             [href]="course.fileURL"
+             target="_blank"
+             rel="noopener">
+            <mat-icon>download</mat-icon>
+            Download Attachment
+          </a>
+        </ng-template>
+      </section>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button mat-button color="primary" routerLink="/dashboard">
+        <mat-icon>arrow_back</mat-icon>
+        Back to Courses
+      </button>
+    </mat-card-actions>
+  </mat-card>
+  <!-- <div>
     <h1>{{ course.name }}</h1>
-    <div class="course-meta">
-      <span>ID: {{ course.id }}</span>
-    </div>
     <h2>Description</h2>
     <p>{{ course.description }}</p>
-  </div>
+  </div> -->
+<!-- 
+  @if(course.fileURL) {
+  <h4>Attached File</h4>
+  <iframe
+    *ngIf="isPdf(course.fileURL)"
+    [src]="course.fileURL | safeResourceUrl"
+    width="100%"
+    height="600"
+  ></iframe>
+
+  <iframe
+    *ngIf="isOfficeDoc(course.fileURL)"
+    [src]="googleViewerUrl(course.fileURL)"
+    width="100%"
+    height="600"
+  ></iframe>
+
+  <a
+    *ngIf="!isPdf(course.fileURL) && !isOfficeDoc(course.fileURL)"
+    mat-button
+    color="primary"
+    [href]="course.fileURL"
+    target="_blank"
+  >
+    Download attachment
+  </a>
+  } -->
 </app-layout-template>
 } @else {
 <p>No course available.</p>

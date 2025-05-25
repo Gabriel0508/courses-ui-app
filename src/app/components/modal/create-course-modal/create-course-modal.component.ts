@@ -15,6 +15,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { UploadComponent } from '../../upload/upload.component';
 import { showNotificationActions } from 'src/app/state/notification/notification.actions';
+import { filter, Subscription } from 'rxjs';
+import { selectDownloadURL } from 'src/app/state/file/file.selectors';
 
 @Component({
   selector: 'app-modal',
@@ -34,6 +36,8 @@ import { showNotificationActions } from 'src/app/state/notification/notification
 export class CreateCourseComponent {
   readonly dialog = inject(MatDialog);
   createItemForm: FormGroup = new FormGroup({});
+  private downloadSub!: Subscription;
+  fileURL: string | null = null;
 
   constructor(
     private readonly validationsService: ValidationsService,
@@ -43,6 +47,18 @@ export class CreateCourseComponent {
 
   ngOnInit(): void {
     this.iniFormItem();
+
+    this.downloadSub = this.store
+      .select(selectDownloadURL)
+      .pipe(filter((url) => !!url))
+      .subscribe((url) => {
+        this.fileURL = url!;
+        this.createItemForm.patchValue({ fileURL: url });
+      });
+  }
+
+  ngOnDestroy() {
+    this.downloadSub?.unsubscribe();
   }
 
   onInputsValidation(field: string, errorType: string): boolean {
@@ -61,6 +77,8 @@ export class CreateCourseComponent {
   addNewCourse(): void {
     if (this.createItemForm.valid) {
       const courseData = this.createItemForm.value;
+      console.log('data created', courseData);
+
       this.store.dispatch(
         CourseApiActions.createCourse({
           course: courseData,
@@ -68,7 +86,9 @@ export class CreateCourseComponent {
       );
       this.store.dispatch(
         showNotificationActions.showNotification({
-          message: `The ${this.createItemForm.get('name')?.value} course was created`,
+          message: `The ${
+            this.createItemForm.get('name')?.value
+          } course was created`,
           notificationType: 'success',
         })
       );
@@ -94,6 +114,7 @@ export class CreateCourseComponent {
         email: ['', [Validators.required, Validators.email]],
       }),
       roles: this.fb.array([]),
+      fileURL: [''],
     });
   }
 }

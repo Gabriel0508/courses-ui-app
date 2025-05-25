@@ -25,18 +25,18 @@ import { AuthEffects } from './state/authentication/auth.effects';
 import { languageReducer } from './state/language/language.reducer';
 import { LanguageEffects } from './state/language/language.effects';
 import { environment } from 'src/environments/environments';
-import { provideDatabase, getDatabase } from '@angular/fire/database';
-import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { notificationReducer } from './state/notification/notification.reducers';
 import { NotificationEffects } from './state/notification/notification.effects';
+import { provideStorage, getStorage } from '@angular/fire/storage';
+import { fileReducer } from './state/file/file.reducers';
+import { UploadEffects } from './state/file/file.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    // { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
     provideRouter(routes),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    //provideDatabase(() => getDatabase()),
+    provideStorage(() => getStorage()),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
     provideStore({
@@ -44,12 +44,14 @@ export const appConfig: ApplicationConfig = {
       auth: authReducer,
       language: languageReducer,
       notification: notificationReducer,
+      file: fileReducer,
     }),
     provideEffects([
       CoursesEffects,
       AuthEffects,
       LanguageEffects,
       NotificationEffects,
+      UploadEffects
     ]),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(withFetch()),

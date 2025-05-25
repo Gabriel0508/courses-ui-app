@@ -19,5 +19,6 @@ export interface Course {
     admin?: string;
     editor?: string;
   }>;
+  fileURL?: string;
   createdAt?: FirestoreTimestamp;
 }

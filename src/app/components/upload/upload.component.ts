@@ -4,15 +4,22 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { FileActions } from 'src/app/state/file/file.actions';
+import { Store } from '@ngrx/store';
 import {
-  Component,
-  ViewChild,
-  ElementRef,
-  ChangeDetectorRef,
-  NgZone,
-} from '@angular/core';
-import { interval } from 'rxjs';
-import { takeWhile, tap, finalize } from 'rxjs/operators';
+  Observable,
+  Subscription,
+  combineLatest,
+  filter,
+  firstValueFrom,
+} from 'rxjs';
+import {
+  selectUploadProgress,
+  selectDownloadURL,
+  selectUploadedFileName,
+  selectDownloadedBlob,
+} from 'src/app/state/file/file.selectors';
 
 @Component({
   selector: 'app-upload',
@@ -31,75 +38,74 @@ import { takeWhile, tap, finalize } from 'rxjs/operators';
 export class UploadComponent {
   @ViewChild('fileInput', { static: true })
   fileInput!: ElementRef<HTMLInputElement>;
-
-  selectedFile: File | null = null;
-  uploadedFile: File | null = null;
   isHovering = false;
-  uploadProgress: number | null = null;
+  progress$: Observable<number> = this.store.select(selectUploadProgress);
+  downloadURL$: Observable<string | null> =
+    this.store.select(selectDownloadURL);
+  fileName$: Observable<string | null> = this.store.select(
+    selectUploadedFileName
+  );
+  blob$: Observable<Blob | null> = this.store.select(selectDownloadedBlob);
 
-  constructor(private ngZone: NgZone, private cdr: ChangeDetectorRef) {}
+  private blobSub?: Subscription;
 
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    const file = input.files?.[0] ?? null;
-    if (!file) {
-      return;
-    }
+  constructor(private store: Store) {}
 
-    this.handleFile(file);
+  ngOnInit() {
+    this.blobSub = combineLatest([this.blob$, this.fileName$])
+      .pipe(filter(([blob, name]) => !!blob && !!name))
+      .subscribe(([blob, name]) => this.saveBlob(blob!, name!));
   }
 
-  onDragOver(event: DragEvent): void {
+  ngOnDestroy() {
+    this.blobSub?.unsubscribe();
+  }
+
+  onFileSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) this.store.dispatch(FileActions.uploadFile({ file }));
+  }
+
+  onDragOver(event: DragEvent) {
     event.preventDefault();
     this.isHovering = true;
   }
 
-  onDragLeave(event: DragEvent): void {
+  onDragLeave(event: DragEvent) {
     event.preventDefault();
     this.isHovering = false;
   }
 
-  onDrop(event: DragEvent): void {
+  onDrop(event: DragEvent) {
     event.preventDefault();
     this.isHovering = false;
-    const file = event.dataTransfer?.files?.[0] ?? null;
-    if (file) {
-      this.handleFile(file);
+    const file = event.dataTransfer?.files?.[0];
+    if (file) this.store.dispatch(FileActions.uploadFile({ file }));
+  }
+
+  async onDownload() {
+    // grab the latest URL & filename, then dispatch download
+    const [url, name] = await firstValueFrom(
+      combineLatest([this.downloadURL$, this.fileName$])
+    );
+    if (url && name) {
+      this.store.dispatch(
+        FileActions.downloadFile({ downloadURL: url, fileName: name })
+      );
     }
   }
 
-  handleFile(file: File): void {
-    this.selectedFile = file;
-    this.uploadFile(file);
+  onDelete() {
+    this.store.dispatch(FileActions.clearUploadState());
+    this.fileInput.nativeElement.value = '';
   }
 
-  uploadFile(file: File): void {
-    this.uploadProgress = 0;
-    this.uploadedFile = file;
-  }
-
-  downloadFile(): void {
-    if (!this.uploadedFile) {
-      return;
-    }
-
-    const url = URL.createObjectURL(this.uploadedFile);
-
-    // Create a temporary <a> element, set the href+download, and click it
+  private saveBlob(blob: Blob, name: string) {
+    const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = this.uploadedFile.name;
-    a.style.display = 'none';
-    document.body.appendChild(a);
+    a.download = name;
     a.click();
-
-    document.body.removeChild(a);
     URL.revokeObjectURL(url);
-  }
-
-  deleteFile(): void {
-    this.uploadedFile = null;
-    this.fileInput.nativeElement.value = '';
-    this.uploadProgress = null;
   }
 }

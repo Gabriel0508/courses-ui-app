@@ -1,4 +1,4 @@
-<mat-card
+<!-- <mat-card
   class="upload-modal"
   (dragover)="onDragOver($event)"
   (dragleave)="onDragLeave($event)"
@@ -53,6 +53,65 @@
           [value]="uploadProgress"
         ></mat-progress-bar>
       </div>
+    </div>
+  </mat-card-content>
+</mat-card> -->
+
+<mat-card
+  class="upload-modal"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave($event)"
+  (drop)="onDrop($event)"
+  [class.drag-hover]="isHovering"
+>
+  <mat-card-content>
+    <div class="upload-content">
+      <input type="file" #fileInput hidden (change)="onFileSelected($event)" />
+
+      <!-- File tile & actions -->
+      <ng-container *ngIf="downloadURL$ | async as url; else pickFile">
+        <mat-card class="file-tile">
+          <div class="file-name">
+            <mat-card-title>{{ fileName$ | async }}</mat-card-title>
+            <mat-card-subtitle>
+              {{ progress$ | async | number : "1.0-0" }}%
+               <!-- {{  uploadedFile.size / 1000 | number : "1.0-2"}}KB -->
+            </mat-card-subtitle>
+          </div>
+          <div class="file-action">
+            <button
+              mat-icon-button
+              (click)="onDownload(); $event.preventDefault()"
+            >
+              <mat-icon>download</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="onDelete(); $event.preventDefault()"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </mat-card>
+      </ng-container>
+
+      <!-- File picker & progress bar -->
+      <ng-template #pickFile>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="fileInput.click(); $event.preventDefault()"
+        >
+          <mat-icon>upload</mat-icon>
+          Choose File
+        </button>
+        <mat-progress-bar
+          *ngIf="(progress$ | async) !== null"
+          mode="determinate"
+          [value]="progress$ | async"
+        ></mat-progress-bar>
+      </ng-template>
     </div>
   </mat-card-content>
 </mat-card>
